@@ -55,14 +55,14 @@ public class CommandController extends ListenerAdapter{
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			
-			/*} else if (msg.startsWith("!default")) {
-				if(channel.getName().equals(SIGNUP_CHAN_NAME)) {
+			} else if (msg.startsWith("!default")) {
+				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
 					channel.sendMessage("Working on it, try again later...").queue(); 
-					//rosterController.setDefault(event);
+					rosterController.setDefault(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
-			*/
+			
 			} else if (msg.startsWith("!rc")) {
 				if(channel.getId().equals(O_CHAN_ID)) {
 					raidController.rollcall(event);

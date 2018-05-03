@@ -73,8 +73,12 @@ public class RaidService {
 	
 	public String rollCall(String msg, Guild guild) throws IOException{
 		String[] paramsCheck = msg.split(" ");
+		String ai = "blood";
 		if(paramsCheck.length < 2) {
 			return null;
+		}
+		if(paramsCheck.length == 3) {
+			ai = paramsCheck[2];
 		}
 		String raidName = paramsCheck[1];
 		Raid raid = new Raid(raidName);
@@ -82,12 +86,13 @@ public class RaidService {
 			return "Raid not found.";
 		}
 		raid = raidRepository.readRaid(raid);
-		String roster = "";
+		String roster = "Forming up for " + raid.getRaidName() + "the following people please log in and enter '" + ai +"' in chat for invite\n";
+		
 		for(Raider r: raid.getStarters()) {
 			roster+=r.toRollCall();
 		}
 		if(raid.getOverflow().size() > 0) {
-			roster+= "--------- \nOverflow: \n--------- \n";
+			roster+= "--------- \nOverflow: \n--------- \nThe following people please be ready to sub in if required:\n";
 			for(Raider r: raid.getOverflow()) {
 				roster+=guild.getMemberById(r.getId());
 			}
@@ -116,7 +121,7 @@ public class RaidService {
 		Raider raider = new Raider(member.getUser().getId(),"");
 		
 		if (paramsCheck.length < 3) {
-			if(getDefault(raider) != "") {
+			if(getDefault(raider) != null) {
 				raider.setRole(getDefault(raider));
 			} else {
 				raider.setRole(ROLE_DPS);
@@ -137,9 +142,8 @@ public class RaidService {
 			if(r.getId().equals(raider.getId())) {
 				isUpdate = true;
 				raiders.remove(r);
-		
 				raid.setRaiders(raiders);
-	
+				break;
 			}
 		}
 		raid.addRaider(raider);
@@ -204,9 +208,52 @@ public class RaidService {
 		
 	}
 	
-	public String getDefault(Raider raider) {
-		//TODO: impliment
-		return "";
+	public String getDefault(Raider raider) throws IOException {
+		List<Raider> defaults = raidRepository.readDefaults();
+		String role = null;
+		if(defaults != null) {
+			for(Raider tempRaider: defaults) {
+				if(tempRaider.getId().equals(raider.getId())) {
+					role = tempRaider.getRole();
+					break;
+				}
+			}
+		}
+		return role;
+	}
+	
+	public String setDefault(Member member, String msg ) throws IOException {
+		String message = "";
+		String[] paramsCheck = msg.split(" ");
+		if(paramsCheck.length < 2) {
+			return "You forgot to specify the role you want to set as default.";
+		}
+		Raider raider = new Raider(member.getUser().getId(),"");
+		if (paramsCheck.length >= 2)  {
+			if(paramsCheck[1].equalsIgnoreCase("heal") || paramsCheck[1].equalsIgnoreCase("heals") ||paramsCheck[1].equalsIgnoreCase("healer") || paramsCheck[1].equals(ROLE_HEALS)) {
+				raider.setRole(ROLE_HEALS);
+			} else if(paramsCheck[1].equalsIgnoreCase("tank") || paramsCheck[1].equalsIgnoreCase("meatshield") || paramsCheck[1].equals(ROLE_TANK)) {
+				raider.setRole(ROLE_TANK);
+			} else {
+				raider.setRole(ROLE_DPS);
+			}
+		}
+		List<Raider> defaults = raidRepository.readDefaults();
+		if(defaults != null) {
+			for(Raider tempRaider: defaults) {
+				if(tempRaider.getId().equals(raider.getId())) {
+					defaults.remove(tempRaider);
+					break;
+				}
+			}
+		}
+		defaults.add(raider);
+		boolean isWritten = raidRepository.writeDefaults(defaults);
+		if(!isWritten) {
+			return "Error occored recording default role.";
+		}
+		message = "Successfully updated the default role of " + member.getEffectiveName() + " to " + raider.getRole()+".";
+		return message;
 	}
 	
 	public String status(String msg, Guild guild) throws IOException{
