@@ -61,7 +61,7 @@ public class RaidRosterController extends ControllerCommandsInfo{
 
 	public void setDefault(MessageReceivedEvent event) {
 		getBasicInfo(event);
-		channel.sendMessage("Work in progress...").queue();
+		channel.sendMessage("Warning: this feature is a work in progress...").queue();
 		try {
 			String message = raidService.setDefault(member, msg);
 			if(message == null) {

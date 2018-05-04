@@ -57,7 +57,6 @@ public class CommandController extends ListenerAdapter{
 			
 			} else if (msg.startsWith("!default")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
-					channel.sendMessage("Working on it, try again later...").queue(); 
 					rosterController.setDefault(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
