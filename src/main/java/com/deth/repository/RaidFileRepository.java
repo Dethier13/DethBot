@@ -1,5 +1,6 @@
 package com.deth.repository;
 
+import static com.deth.util.FinalUtilChannels.DEFAULTS_FILE_PATH;
 import static com.deth.util.FinalUtilChannels.RAID_FILE_PATH;
 
 import java.io.BufferedReader;
@@ -9,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.deth.model.Raid;
@@ -97,6 +99,43 @@ public class RaidFileRepository {
 		bufferedWriter.write(raid.toFileInfo());
 		bufferedWriter.newLine();
 		bufferedWriter.write(raid.toFileRoster());
+		bufferedWriter.flush();
+		bufferedWriter.close();
+		return true;
+	}
+	
+	public List<Raider> readDefaults() throws IOException{
+		String fileName = DEFAULTS_FILE_PATH;
+		List<Raider> raiderList = new ArrayList<>();
+		Raider tempRaider = null;
+		{
+			String readBuffer = "";
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+			
+			String[] raidersParse;
+			while((readBuffer = bufferedReader.readLine())!= null) {
+				raidersParse = readBuffer.split(" ");
+				if(raidersParse.length == 2) {
+					tempRaider = new Raider(raidersParse[0], raidersParse[1]);
+				} else {
+					bufferedReader.close();
+					return null;
+				}
+				raiderList.add(tempRaider);
+			}
+			bufferedReader.close();
+			
+		}
+		
+		return raiderList;
+	}
+	
+	public boolean writeDefaults(List<Raider> defaults) throws IOException {
+		String fileName = DEFAULTS_FILE_PATH;
+		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+		for(Raider raider: defaults) {
+			bufferedWriter.write(raider.toFile());
+		}
 		bufferedWriter.flush();
 		bufferedWriter.close();
 		return true;

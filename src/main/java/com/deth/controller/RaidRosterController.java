@@ -61,6 +61,17 @@ public class RaidRosterController extends ControllerCommandsInfo{
 
 	public void setDefault(MessageReceivedEvent event) {
 		getBasicInfo(event);
-		channel.sendMessage("Not re-implimented yet.").queue();
+		channel.sendMessage("Warning: this feature is a work in progress...").queue();
+		try {
+			String message = raidService.setDefault(member, msg);
+			if(message == null) {
+				channel.sendMessage("Something went wrong. Try again later please.").queue();
+			}
+			channel.sendMessage(message).queue();
+		}  catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("withdraw failed " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("withdraw failed " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(SIGNUP_CHAN_ID).sendMessage("Error occurred. Please try again later." ).queue();
+		}
 	}
 }

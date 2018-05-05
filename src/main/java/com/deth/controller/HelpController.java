@@ -41,7 +41,7 @@ public class HelpController extends ControllerCommandsInfo{
 		//close
 		help+="!close [name of raid]\n-used to close raid and delete file used.\n";
 		//rc
-		help+="!rc [name of raid] [custom message] \n-calls all people that signed up for the raid.\n-If you include a custom message, it'll display after the roster.\n";
+		help+="!rc [name of raid] [custom Ai String] \n-calls all people that signed up for the raid.\n-If you include a custom message, it'll display the custom AI in the string, if not it defaults to 'blood'.\n";
 		channel.sendMessage(help).queue();
 	}
 }
