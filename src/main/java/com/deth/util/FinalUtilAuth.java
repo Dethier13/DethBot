@@ -1,7 +1,7 @@
 package com.deth.util;
 
 public final class FinalUtilAuth {
-	public static final String TOKEN = System.getenv("LEGION_TOKEN");
+	//public static final String TOKEN = System.getenv("LEGION_TOKEN");
 	
 	
 	/*

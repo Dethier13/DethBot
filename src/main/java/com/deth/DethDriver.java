@@ -1,6 +1,6 @@
 package com.deth;
 
-import static com.deth.util.FinalUtilAuth.TOKEN;
+import static com.deth.util.FinalUtilProperties.*;
 
 import javax.security.auth.login.LoginException;
 

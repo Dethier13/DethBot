@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-import static com.deth.util.FinalUtilChannels.*;
+import static com.deth.util.FinalUtilProperties.*;
 
 public class CommandController extends ListenerAdapter{
 

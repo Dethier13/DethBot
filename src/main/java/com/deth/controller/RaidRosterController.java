@@ -1,7 +1,6 @@
 package com.deth.controller;
 
-import static com.deth.util.FinalUtilChannels.BOT_CHAN_ID;
-import static com.deth.util.FinalUtilChannels.SIGNUP_CHAN_ID;
+import static com.deth.util.FinalUtilProperties.*;
 
 import java.io.IOException;
 

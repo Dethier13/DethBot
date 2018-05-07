@@ -6,7 +6,7 @@ public final class FinalUtilChannels {
 	
 	
 	//Testing Discord
-
+/*
 	public static final String SIGNUP_CHAN_ID = "424356309903605765";
 	
 
@@ -37,7 +37,7 @@ public final class FinalUtilChannels {
 	
 	
 	//file paths
-	public static final String RAID_FILE_PATH = "resources/raids/";
-	public static final String DEFAULTS_FILE_PATH = "resources/defaults.txt";
+	//public static final String RAID_FILE_PATH = "resources/raids/";
+	//public static final String DEFAULTS_FILE_PATH = "resources/defaults.txt";
 	
 }

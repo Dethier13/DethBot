@@ -1,9 +1,6 @@
 package com.deth.service;
 
-import static com.deth.util.FinalUtilChannels.RAID_FILE_PATH;
-import static com.deth.util.FinalUtilChannels.ROLE_DPS;
-import static com.deth.util.FinalUtilChannels.ROLE_HEALS;
-import static com.deth.util.FinalUtilChannels.ROLE_TANK;
+import static com.deth.util.FinalUtilProperties.*;
 
 import java.io.File;
 import java.io.IOException;

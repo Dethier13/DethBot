@@ -2,7 +2,7 @@ package com.deth.controller;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import static com.deth.util.FinalUtilChannels.*;
+import static com.deth.util.FinalUtilProperties.*;
 
 public class HelpController extends ControllerCommandsInfo{
 	public void raidHelp(MessageReceivedEvent event) {
