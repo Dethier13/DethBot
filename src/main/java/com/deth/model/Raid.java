@@ -226,6 +226,9 @@ public class Raid {
 	private void updateRosters() {
 		starters.removeAll(starters);
 		overflow.removeAll(overflow);
+		numTank = 0;
+		numHeal = 0;
+		numDps = 0;
 		for(int i = 0; i < raiders.size(); i++) {
 			if(raiders.get(i).getRole().equals(ROLE_TANK)) {
 				this.numTank++;
