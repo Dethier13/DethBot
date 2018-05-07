@@ -28,7 +28,7 @@ hs_err_pid*
 */META-INF/*
 
 #props
-.properties
+*.properties
 
 #ignore resources
 */resources/*
