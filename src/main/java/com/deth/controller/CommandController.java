@@ -4,6 +4,8 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -14,7 +16,7 @@ public class CommandController extends ListenerAdapter{
 	
 	RaidController raidController = new RaidController();
 	RaidRosterController rosterController = new RaidRosterController();
-	HelpController helpController = new HelpController();
+	InfoController infoController = new InfoController();
 	
 	
 	@Override
@@ -27,6 +29,7 @@ public class CommandController extends ListenerAdapter{
 		Message message = event.getMessage();
 		MessageChannel channel = event.getChannel();
 		String msg = message.getContentDisplay();
+		
 		try {
 			if (msg.startsWith("!open")) {
 				if(channel.getId().equals(O_CHAN_ID)) {
@@ -42,14 +45,14 @@ public class CommandController extends ListenerAdapter{
 				}
 			} else if (msg.startsWith("!su")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
-					channel.sendMessage("Processing...").queue(); 
+					//channel.sendMessage("Processing...").queue(); 
 					rosterController.signup(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			} else if (msg.startsWith("!withdraw")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
-					channel.sendMessage("Processing...").queue(); 
+					//channel.sendMessage("Processing...").queue(); 
 					rosterController.withdraw(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
@@ -70,7 +73,7 @@ public class CommandController extends ListenerAdapter{
 				}
 			}  else if (msg.startsWith("!status")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
-					channel.sendMessage("Processing...").queue(); 
+					//channel.sendMessage("Processing...").queue(); 
 					rosterController.status(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
@@ -78,13 +81,26 @@ public class CommandController extends ListenerAdapter{
 			} else if (msg.startsWith("!raidlist")) {
 				raidController.raidList(event);
 			} else if (msg.startsWith("!raidhelp")) {
-				helpController.raidHelp(event);
-			}
+				infoController.raidHelp(event);
+			} else if (msg.startsWith("!rules")) {
+				infoController.rules(event);
+			} 
 		} catch (Exception e) {
 			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("exception occurred: " + e).queue();
 			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("trace: " + e.getStackTrace()).queue();
 		}
 		
 		
+	}
+	
+	@Override
+	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+		infoController.welcomeMsg(event); 
+
+	}
+	
+	@Override
+	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
+		infoController.leaveMsg(event);
 	}
 }

@@ -1,0 +1,9 @@
+Available Officer commands are:
+-> !open [name of raid] [#tanks] [#heals] [#dps] msg: [custom message to display].
+	-Opens new raid and makes announcement  in signup channel.
+	-The #'s for each role are required, as they are used to determine overflow.
+	-The custom msg is detected by the 'msg: ' tag, if that isn't there there will be no custom message.
+-> !close [name of raid]\n-used to close raid and delete file used.
+-> !rc [name of raid] [custom Ai String]
+	-Calls all people that signed up for the raid.
+	-If you include a custom message, it'll display the custom AI in the string, if not it defaults to 'blood'.
