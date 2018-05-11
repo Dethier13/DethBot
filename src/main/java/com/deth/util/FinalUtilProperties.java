@@ -35,6 +35,7 @@ public final class FinalUtilProperties {
 	public static final String O_HELP_FILE = "resources/messages/officerHelp.txt";
 	public static final String RULES_MESSAGE = "resources/messages/rules.txt";
 	public static final String RULES_MESSAGE2 = "resources/messages/rules2.txt";
+	public static final String RAID_SCHEDULE = "resources/messages/raidSchedule.txt";
 
 	
 	static {

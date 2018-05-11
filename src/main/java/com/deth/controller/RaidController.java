@@ -60,11 +60,14 @@ public class RaidController extends ControllerCommandsInfo{
 	public void raidList(MessageReceivedEvent event) {
 		getBasicInfo(event);
 
-		String message = raidService.raidList();
-		if (message == null) {
-			channel.sendMessage("Double check that command dumbass, somethings wrong with it.").queue();
+		String message = "";
+		try {
+			message = raidService.raidList();
+			channel.sendMessage(message).queue();
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("rollcall failed " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("rollcall failed " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error occurred. " ).queue();
 		}
-		channel.sendMessage(message).queue();
 	}
-	
 }

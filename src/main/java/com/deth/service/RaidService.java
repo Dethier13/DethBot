@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.deth.model.Raid;
 import com.deth.model.Raider;
+import com.deth.repository.MessageFileRepository;
 import com.deth.repository.RaidFileRepository;
 
 import net.dv8tion.jda.core.entities.Guild;
@@ -18,6 +19,7 @@ import net.dv8tion.jda.core.entities.Member;
 public class RaidService {
 	private static final RaidService instance = new RaidService();
 	private RaidFileRepository raidRepository = RaidFileRepository.getInstance();
+	private MessageFileRepository msgRepository = MessageFileRepository.getInstance();
 	private RaidService() {}
 	
 	public static RaidService getInstance() {
@@ -287,7 +289,7 @@ public class RaidService {
 		}
 	}
 	
-	public String raidList() {
+	public String raidList() throws IOException{
 		String pathName=RAID_FILE_PATH;
 		File filePath = new File(RAID_FILE_PATH);
 		ArrayList<String> raids = new ArrayList<String>(Arrays.asList(filePath.list()));
@@ -295,6 +297,7 @@ public class RaidService {
 		boolean isRaids = raids.size()>0;
 		if(!isRaids) {
 			message += "There are no raids currently open. \n Please check the raid schedule, raids are generally opened ~24 hours before a scheduled raid.";
+			message += msgRepository.readRaidSchedule();
 		}
 		for(int i = 0; i < raids.size(); i++) {
 			message += raids.get(i).substring(0, raids.get(i).indexOf('.'));

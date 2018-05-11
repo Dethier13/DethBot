@@ -30,4 +30,8 @@ public class MessageService {
 	public String rules2() throws IOException{
 		return msgRepository.readRules2();
 	}
+	
+	public String schedule() throws IOException {
+		return msgRepository.readRaidSchedule();
+	}
 }

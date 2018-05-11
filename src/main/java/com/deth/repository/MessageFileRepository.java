@@ -58,4 +58,15 @@ private static final MessageFileRepository instance = new MessageFileRepository(
 		}
 		return message;
 	}
+	
+	public String readRaidSchedule() throws IOException {
+		String message = "";
+		String fileName = RAID_SCHEDULE;
+		String readBuffer = "";
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+		while((readBuffer = bufferedReader.readLine())!= null) {
+			message += readBuffer+"\n";
+		}
+		return message;
+	}
 }

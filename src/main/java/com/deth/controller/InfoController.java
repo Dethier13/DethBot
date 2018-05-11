@@ -56,6 +56,19 @@ public class InfoController extends ControllerCommandsInfo{
 		}
 	}
 	
+	public void raidSchedule(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		String returnMessage = "Current Guild raid schedule:\n";
+		try { 
+			returnMessage = msgService.schedule();
+			channel.sendMessage(returnMessage).queue();
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("signup failed " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("signup failed " + ioe.getStackTrace()).queue();
+			channel.sendMessage("Error occurred. Please try again later." ).queue();
+		}
+	}
+	
 	public void welcomeMsg(GuildMemberJoinEvent event) {
 		User user = event.getUser();
 		final String rules1;
@@ -82,4 +95,5 @@ public class InfoController extends ControllerCommandsInfo{
 		Guild guild = event.getGuild();
 		guild.getTextChannelById(O_CHAN_ID).sendMessage("The following person just left the server: " + user.getName() + ". BYE FELICIA").queue();
 	}
+	
 }
