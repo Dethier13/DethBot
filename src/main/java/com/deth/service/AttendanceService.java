@@ -1,16 +1,22 @@
 package com.deth.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.deth.model.Attendance;
 import com.deth.model.Raider;
 import com.deth.repository.AttendanceRepository;
 
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
 
 public class AttendanceService {
-
+	//TODO: add help
 	private static final AttendanceService instance = new AttendanceService();
 	private AttendanceRepository attendanceRepository = AttendanceRepository.getInstance();
 	private Attendance attendance = Attendance.getInstance();
@@ -44,15 +50,21 @@ public class AttendanceService {
 	}
 	
 	public String removeRaider(String msg, Guild guild) {
-		String[] paramsCheck = msg.split(" ");
-		if(paramsCheck.length < 2) {
+		msg = msg.substring(msg.indexOf(" "), msg.length());
+		String[] paramsCheck = msg.split(", ");
+		if(paramsCheck.length < 1) {
 			return "You forgot to specify who to remove dumbass.";
 		}
-		Raider raider = new Raider(paramsCheck[1],"");
-		String message = "You just removed " + guild.getMemberById(raider.getId()).getEffectiveName();
-		boolean isRemoved = attendance.removeRaider(raider);
-		if(!isRemoved) {
-			return "Some error occured removing them, check your command and the discord ID.";
+		Raider raider = null;
+		boolean isRemoved = true;
+		String message = "You just removed: \n";
+		for(String s: paramsCheck) {
+			raider = new Raider(s,"");
+			isRemoved = attendance.removeRaider(s);
+			if(!isRemoved) {
+				return "Something went wrong trying to remove id# " + s + " attendance removal has stopped.";
+			}
+			message = "" + guild.getMemberById(raider.getId()).getEffectiveName()+"\n";
 		}
 		return message;
 	}
@@ -60,6 +72,49 @@ public class AttendanceService {
 		String message = "Current raid attendance updated, raid roster cleared, you can no longer change the raid's attendance.";
 		attendance.update();
 		attendanceRepository.writeAttendance();
+		return message;
+	}
+	
+	public String kickList(Guild guild) throws IOException{
+		String message = "The following people are slotted to be kicked:\n";
+		List<Role> roles = guild.getRoles();
+		List<Member> members = guild.getMembersWithRoles(roles.get(0));
+
+		List<Raider> attend = attendance.getFullAttendance();
+		LocalDate date = LocalDate.now();
+		LocalDate tempDate = null;
+
+		TreeMap<String,Integer> kickList = new TreeMap<String,Integer>();
+		Period dateDifference;
+		/**
+		 * Sort through discord and see who is at the lowest role that has been in discord for over a month.
+		 */
+		for(Member m: members) {
+			tempDate = LocalDate.of(m.getJoinDate().getYear(), m.getJoinDate().getMonth().getValue(), m.getJoinDate().getDayOfMonth());
+			dateDifference = Period.between(tempDate, date);
+			if(dateDifference.getDays() > 31) {
+				kickList.put(m.getUser().getId(),dateDifference.getDays());
+			}
+		}
+		int numRolestoCheck = roles.size()-3; //GM | officer | core ? need to check logic, might need 4th for owner
+		members = guild.getMembersWithRoles(roles.get(1));
+		for(int i = 2; i < numRolestoCheck; i++) {
+			members.addAll(guild.getMembersWithRoles(roles.get(i)));
+		}
+		
+		for(Member m: members) {
+			for(Raider r: attend) {
+				if(m.getUser().getId().equals(r.getId())){
+					dateDifference = Period.between(r.getRaidDate(), date);
+					if(dateDifference.getDays() > 31) {
+						kickList.put(r.getId(),dateDifference.getDays());
+					}
+				}
+			}
+		}
+		for(Map.Entry<String,Integer> entry : kickList.entrySet()) {
+			message+= ""+ guild.getMemberById(entry.getKey()).getEffectiveName() + " last recorded raid was: " + entry.getValue() + " days ago.";
+		}
 		return message;
 	}
 }
