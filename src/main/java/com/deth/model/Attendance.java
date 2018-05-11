@@ -4,32 +4,62 @@ import java.util.Collections;
 import java.util.List;
 
 public class Attendance {
-	Raider[] raiders = new Raider[12];
-	List<Raider> fullAttendance;
+	private List<Raider> raidRoster;
+	private List<Raider> fullAttendance;
+	private static Attendance instance = new Attendance();
+	
 
-	public Attendance() {
+	private Attendance() {
+		this.raidRoster=Collections.emptyList();
 		this.fullAttendance=Collections.emptyList();
 	}
-	public Attendance(List<Raider> raiders) {
-		super();
-		this.fullAttendance = raiders;
+	public static Attendance getInstance() {
+		return instance;
+	}
+	public void setFullAttendance(List<Raider> attendance) {
+		this.fullAttendance = attendance;
 	}
 	public List<Raider> getFullAttendance() {
 		return fullAttendance;
 	}
 	
-	public void setRaiders()
+	public void setRaiders(List<Raider> raiders) {
+		this.raidRoster=raiders;
+	}
+	public List<Raider> getRaiders() {
+		return this.raidRoster;
+	}
 	
-	public boolean update(Raider raider) {
-		if(raider == null) {
-			return false;
-		}
-		for(Raider r: fullAttendance) {
-			if(r.getId().equals(raider.getId())){
-				fullAttendance.remove(r);
-				fullAttendance.add(raider);
+	public boolean removeRaider(Raider raider) {
+		this.raidRoster.remove(raider);
+		return true;
+	}
+	
+	public boolean removeRaider(String iD) {
+		boolean isRemoved = false;
+		for(Raider r: raidRoster) {
+			if(r.getId().equals(iD)){
+				raidRoster.remove(r);
+				isRemoved = true;
 			}
 		}
+		return isRemoved;
+	}
+	
+	public boolean update() {
+		for(Raider r: raidRoster) {
+			for(Raider attend: fullAttendance) {
+				if(r.getId().equals(attend.getId())){
+					fullAttendance.remove(r);
+					fullAttendance.add(attend);
+					raidRoster.remove(r);
+				}
+			}
+		}
+		for(Raider r: raidRoster) {
+			fullAttendance.add(r);
+		}
+		fullAttendance = Collections.emptyList();
 		return true;
 	}
 	
@@ -40,4 +70,6 @@ public class Attendance {
 		}
 		return attendance;
 	}
+	
+	
 }

@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +19,15 @@ public class AttendanceRepository {
 	
 	private AttendanceRepository(){}
 	
-	public  AttendanceRepository getInstance() {
+	public  static AttendanceRepository getInstance() {
 		return instance;
 	}
 	
-	public Attendance readAttendance() throws IOException{
+	public boolean readAttendance() throws IOException{
 		String fileName = RAID_ACTIVITY;
 		List<Raider> raiders = new ArrayList<>();
 		Raider tempRaider = null;
-		Attendance attendance = null;
+		Attendance attendance = Attendance.getInstance();
 		{
 			String readBuffer = "";
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -34,23 +35,23 @@ public class AttendanceRepository {
 			while((readBuffer = bufferedReader.readLine())!= null) {
 				raidListParse = readBuffer.split(" ");
 				if(raidListParse.length == 2) {
-					tempRaider = new Raider(raidListParse[0], raidListParse[1]);
+					tempRaider = new Raider(raidListParse[0], LocalDate.parse(raidListParse[1]));
 				} else {
 					bufferedReader.close();
-					return null;
+					return false;
 				}
 				raiders.add(tempRaider);
 			}
 			bufferedReader.close();
 		}
-		attendance = new Attendance(raiders);
-		return attendance;
+		attendance.setFullAttendance(raiders);
+		return true;
 	}
 	
-	public boolean writeAttendance(Attendance attendance) throws IOException {
+	public boolean writeAttendance() throws IOException {
 		String fileName = RAID_ACTIVITY;
 		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-		bufferedWriter.write(attendance.toFile());
+		bufferedWriter.write(Attendance.getInstance().toFile());
 		bufferedWriter.flush();
 		bufferedWriter.close();
 		return true;
