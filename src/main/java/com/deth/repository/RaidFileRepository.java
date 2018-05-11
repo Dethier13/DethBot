@@ -1,7 +1,6 @@
 package com.deth.repository;
 
-import static com.deth.util.FinalUtilChannels.DEFAULTS_FILE_PATH;
-import static com.deth.util.FinalUtilChannels.RAID_FILE_PATH;
+import static com.deth.util.FinalUtilProperties.*;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

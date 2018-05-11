@@ -23,3 +23,12 @@ hs_err_pid*
 
 #settings
 .settings
+
+#meta-inf
+*/META-INF/*
+
+#props
+*.properties
+
+#ignore resources
+*/resources/*

@@ -3,7 +3,7 @@ package com.deth.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.deth.util.FinalUtilChannels.*;
+import static com.deth.util.FinalUtilProperties.*;
 
 public class Raid {
 	private String raidName;

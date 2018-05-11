@@ -6,7 +6,7 @@ import com.deth.service.RaidService;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-import static com.deth.util.FinalUtilChannels.*;
+import static com.deth.util.FinalUtilProperties.*;
 
 public class RaidController extends ControllerCommandsInfo{
 	private RaidService raidService = RaidService.getInstance();
