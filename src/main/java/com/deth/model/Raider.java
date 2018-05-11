@@ -1,9 +1,13 @@
 package com.deth.model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Raider {
 	private String id;
 	private String role;
 	private String info;
+	private LocalDate raidDate;
 	
 	public Raider() {}
 
@@ -18,6 +22,12 @@ public class Raider {
 		this.id = id;
 		this.role = role;
 		this.info = info;
+	}
+	
+	public Raider(String id, LocalDate raidDate) {
+		super();
+		this.id = id;
+		this.raidDate = raidDate;
 	}
 
 	public String getId() {
@@ -42,6 +52,14 @@ public class Raider {
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	
+	public LocalDate getRaidDate() {
+		return raidDate;
+	}
+	
+	public void setRaidDate(LocalDate raidDate) {
+		this.raidDate = raidDate;
 	}
 
 	@Override
@@ -88,6 +106,10 @@ public class Raider {
 	
 	public String toFile() {
 		return ""+this.id+" " + this.role + "\n";
+	}
+	
+	public String toAttendance() {
+		return ""+this.id+" " + this.raidDate+"\n";
 	}
 	
 	public String toFileWithInfo() {

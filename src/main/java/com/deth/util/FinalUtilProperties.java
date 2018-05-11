@@ -36,6 +36,8 @@ public final class FinalUtilProperties {
 	public static final String RULES_MESSAGE = "resources/messages/rules.txt";
 	public static final String RULES_MESSAGE2 = "resources/messages/rules2.txt";
 	public static final String RAID_SCHEDULE = "resources/messages/raidSchedule.txt";
+	public static final String RAID_ACTIVITY = "resources/attendance/raidActivity.txt";
+	public static final String LEAVE_OF_ABSCENCE = "resources/attendance/leaveOfAbscence.txt";
 
 	
 	static {
