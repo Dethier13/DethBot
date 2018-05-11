@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.deth.model.Attendance;
 import com.deth.model.Raid;
 import com.deth.model.Raider;
 import com.deth.repository.MessageFileRepository;
@@ -96,6 +97,7 @@ public class RaidService {
 				roster+=guild.getMemberById(r.getId());
 			}
 		}
+		Attendance.getInstance().setRaiders(raid.getRaiders());
 		return roster;
 	}
 	

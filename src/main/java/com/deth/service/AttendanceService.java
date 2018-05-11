@@ -75,10 +75,10 @@ public class AttendanceService {
 		return message;
 	}
 	
-	public String kickList(Guild guild) throws IOException{
+	public String kickList(Guild guild) {
 		String message = "The following people are slotted to be kicked:\n";
 		List<Role> roles = guild.getRoles();
-		List<Member> members = guild.getMembersWithRoles(roles.get(0));
+		List<Member> members = guild.getMembersWithRoles(roles.get(1)); //0 is the everyone role?
 
 		List<Raider> attend = attendance.getFullAttendance();
 		LocalDate date = LocalDate.now();
@@ -97,11 +97,16 @@ public class AttendanceService {
 			}
 		}
 		int numRolestoCheck = roles.size()-3; //GM | officer | core ? need to check logic, might need 4th for owner
-		members = guild.getMembersWithRoles(roles.get(1));
-		for(int i = 2; i < numRolestoCheck; i++) {
+		/**
+		 * add remainder of users in discord
+		 */
+		members = guild.getMembersWithRoles(roles.get(2));
+		for(int i = 3; i < numRolestoCheck; i++) {
 			members.addAll(guild.getMembersWithRoles(roles.get(i)));
 		}
-		
+		/**
+		 * cycle through remaining members and check if theyve raided with us in the last ~31 days. 
+		 */
 		for(Member m: members) {
 			for(Raider r: attend) {
 				if(m.getUser().getId().equals(r.getId())){
@@ -112,6 +117,9 @@ public class AttendanceService {
 				}
 			}
 		}
+		/**
+		 * add everyone on the kick list with their name and how many days ago they raided with us.
+		 */
 		for(Map.Entry<String,Integer> entry : kickList.entrySet()) {
 			message+= ""+ guild.getMemberById(entry.getKey()).getEffectiveName() + " last recorded raid was: " + entry.getValue() + " days ago.";
 		}
