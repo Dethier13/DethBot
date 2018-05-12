@@ -41,6 +41,18 @@ public class InfoController extends ControllerCommandsInfo{
 		channel.sendMessage(help).queue();
 	}
 	
+	public void attendanceHelp(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		try {
+			String help = msgService.attendanceHelp();
+			channel.sendMessage(help).queue();
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("signup failed " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("signup failed " + ioe.getStackTrace()).queue();
+			channel.sendMessage("Error occurred. Please try again later." ).queue();
+		}
+	}
+	
 	public void rules(MessageReceivedEvent event) {
 		getBasicInfo(event);
 		String returnMessage = "";

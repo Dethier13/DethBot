@@ -23,6 +23,11 @@ public class MessageService {
 		return msgRepository.readOHelp();
 	}
 	
+	public String attendanceHelp() throws IOException{
+		System.out.println("in attendance help");
+		return msgRepository.readAttendanceHelp();
+	}
+	
 	public String rules() throws IOException{
 		return msgRepository.readRules();
 	}

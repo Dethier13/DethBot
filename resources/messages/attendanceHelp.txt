@@ -1,0 +1,16 @@
+Available Attendance commands are:
+-> !attendance-raid
+	- Displays the list of ppl currently set to recieve credit from the last rollcall.
+-> !attendance-remove [discord id #],[discord id #],[discord id #].....
+	- Removes someone from getting credit for the last raid.
+	- Use for no-shows or overflow(?).
+-> !attendance-update
+	- Updates attendance records for everybody shown in !attendance-raid to have raided today.
+-> !attendance-full
+	- Displays The last day raided for everybody since bot went live.
+	- Soon: clean list after X amount of time.
+-> !attendance-list
+	- Displays a list of members to kick based on the following criterea:
+		-- It has been more than 31 days since joining discord and still only have skeever rank (IE no promotion since joining).
+		-- It has past the agreed upon time frame since they last raided with legion.
+		-- They are ranked below core team.

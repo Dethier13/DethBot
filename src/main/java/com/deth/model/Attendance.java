@@ -1,5 +1,7 @@
 package com.deth.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,8 +12,8 @@ public class Attendance {
 	
 
 	private Attendance() {
-		this.raidRoster=Collections.emptyList();
-		this.fullAttendance=Collections.emptyList();
+		this.raidRoster= new ArrayList<>();
+		this.fullAttendance= new ArrayList<>();
 	}
 	public static Attendance getInstance() {
 		return instance;
@@ -35,31 +37,49 @@ public class Attendance {
 		return true;
 	}
 	
-	public boolean removeRaider(String iD) {
+	public synchronized boolean removeRaider(String iD) {
 		boolean isRemoved = false;
-		for(Raider r: raidRoster) {
-			if(r.getId().equals(iD)){
-				raidRoster.remove(r);
+		System.out.println("in removeRaider. checking for id:"+ iD + ". currentRoster: " + raidRoster.toString());
+		for(int i = 0; i < raidRoster.size(); i++) {
+			System.out.println("In loop, current raider check: " + raidRoster.get(i).getId() + " against: " + iD + ".");
+			if(raidRoster.get(i).getId().equals(iD)){
+				System.out.println("raider found: " + raidRoster.get(i).toAttendance());
+				raidRoster.remove(i);
+				i--;
 				isRemoved = true;
 			}
 		}
+		System.out.println("loop finished.");
 		return isRemoved;
 	}
 	
 	public boolean update() {
-		for(Raider r: raidRoster) {
-			for(Raider attend: fullAttendance) {
-				if(r.getId().equals(attend.getId())){
-					fullAttendance.remove(r);
-					fullAttendance.add(attend);
-					raidRoster.remove(r);
+		System.out.println("Attendance update().");
+		for(int i = 0; i < raidRoster.size(); i++) {
+			System.out.println("update loop, raider:  " + raidRoster.get(i).toAttendance());
+			for (int j = 0; j < fullAttendance.size(); j++)	
+				if(raidRoster.get(i).getId().equals(fullAttendance.get(j).getId())){
+					System.out.println("raider found, updating.");
+					fullAttendance.remove(fullAttendance.get(j));
+					j--;
+					System.out.println("J decrament");
+					raidRoster.get(i).setRaidDate(LocalDate.now());
+					fullAttendance.add(raidRoster.get(i));
+					raidRoster.remove(i);
+					i--;
+					System.out.println("I decrament");
+					break;
 				}
 			}
-		}
+		
+		System.out.println("update loop finished.");
 		for(Raider r: raidRoster) {
+			System.out.println("second loop, raider:" + r.toAttendance());
+			r.setRaidDate(LocalDate.now());
 			fullAttendance.add(r);
 		}
-		fullAttendance = Collections.emptyList();
+		System.out.println("second loop finished.");
+		raidRoster.removeAll(raidRoster);
 		return true;
 	}
 	

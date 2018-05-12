@@ -17,6 +17,7 @@ public class CommandController extends ListenerAdapter{
 	RaidController raidController = new RaidController();
 	RaidRosterController rosterController = new RaidRosterController();
 	InfoController infoController = new InfoController();
+	AttendanceController attendanceController = new AttendanceController();
 	
 	
 	@Override
@@ -84,10 +85,31 @@ public class CommandController extends ListenerAdapter{
 				infoController.raidHelp(event);
 			} else if (msg.startsWith("!rules")) {
 				infoController.rules(event);
-			} 
+			} else if (msg.startsWith("!attendance-raid")) {
+				channel.sendMessage("Processing....").queue();
+				attendanceController.raidAttendance(event);
+			} else if (msg.startsWith("!attendance-full")) {
+				channel.sendMessage("Processing...").queue();
+				attendanceController.fullAttendance(event);
+			} else if (msg.startsWith("!attendance-remove")) {
+				channel.sendMessage("Processing...").queue();
+				attendanceController.removeAttendance(event);
+			} else if (msg.startsWith("!attendance-update")) {
+				channel.sendMessage("Processing....").queue();
+				attendanceController.commitAttendance(event);
+			} else if (msg.startsWith("!attendance-list")) {
+				channel.sendMessage("Processing....").queue();
+				attendanceController.getKickList(event);
+			} else if (msg.startsWith("!attendance-help")) {
+				if(channel.getId().equals(O_CHAN_ID)) {
+					infoController.attendanceHelp(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+			}
 		} catch (Exception e) {
 			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("exception occurred: " + e).queue();
-			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("trace: " + e.getStackTrace()).queue();
+			//event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("trace: " + e.).queue();
 		}
 		
 		
