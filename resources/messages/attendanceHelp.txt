@@ -6,6 +6,8 @@ Available Attendance commands are:
 	- Use for no-shows or overflow(?).
 -> !attendance-update
 	- Updates attendance records for everybody shown in !attendance-raid to have raided today.
+	- Removes Skeever rank from anybody on the update list.
+	- Adds Zombie rank to everybody on the update list if they previousely had Skeever rank
 -> !attendance-full
 	- Displays The last day raided for everybody since bot went live.
 	- Soon: clean list after X amount of time.

@@ -86,22 +86,44 @@ public class CommandController extends ListenerAdapter{
 			} else if (msg.startsWith("!rules")) {
 				infoController.rules(event);
 			} else if (msg.startsWith("!attendance-raid")) {
-				channel.sendMessage("Processing....").queue();
-				attendanceController.raidAttendance(event);
+				if(channel.getId().equals(BOT_CHAN_ID)) {
+					channel.sendMessage("Processing....").queue();
+					attendanceController.raidAttendance(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+				
 			} else if (msg.startsWith("!attendance-full")) {
-				channel.sendMessage("Processing...").queue();
-				attendanceController.fullAttendance(event);
+				if(channel.getId().equals(BOT_CHAN_ID)) {
+					channel.sendMessage("Processing...").queue();
+					attendanceController.fullAttendance(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			} else if (msg.startsWith("!attendance-remove")) {
-				channel.sendMessage("Processing...").queue();
-				attendanceController.removeAttendance(event);
+				if(channel.getId().equals(BOT_CHAN_ID)) {
+					channel.sendMessage("Processing...").queue();
+					attendanceController.removeAttendance(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			} else if (msg.startsWith("!attendance-update")) {
-				channel.sendMessage("Processing....").queue();
-				attendanceController.commitAttendance(event);
+				if(channel.getId().equals(BOT_CHAN_ID)) {
+					channel.sendMessage("Processing....").queue();
+					attendanceController.commitAttendance(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			} else if (msg.startsWith("!attendance-list")) {
-				channel.sendMessage("Processing....").queue();
-				attendanceController.getKickList(event);
+				if(channel.getId().equals(BOT_CHAN_ID)) {
+					channel.sendMessage("Processing....").queue();
+					attendanceController.getKickList(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+				
 			} else if (msg.startsWith("!attendance-help")) {
-				if(channel.getId().equals(O_CHAN_ID)) {
+				if(channel.getId().equals(BOT_CHAN_ID)) {
 					infoController.attendanceHelp(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();

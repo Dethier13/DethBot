@@ -40,7 +40,7 @@ public class AttendanceController extends ControllerCommandsInfo{
 		getBasicInfo(event);
 		String message = "";
 		try {
-			message = attendanceService.commitAttendance();
+			message = attendanceService.commitAttendance(guild);
 			channel.sendMessage(message).queue();
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("failed to commit attendance " + ioe).queue();
@@ -53,7 +53,6 @@ public class AttendanceController extends ControllerCommandsInfo{
 		String message = "";
 		try {
 			message = attendanceService.kickList(guild);
-			System.out.println("controller msg: " + message);
 			channel.sendMessage(message).queue();
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("failed to gen kick list " + ioe).queue();

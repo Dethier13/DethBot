@@ -20,7 +20,23 @@ public final class FinalUtilProperties {
 	public static final String BOT_CHAN_ID;
 	
 	/**
-	 * Uses for displaying roles
+	 * Discord Roles for attendance features
+	 * used for promoting from raids and exempting from attendance.
+	 */
+	public static final String SKEEVER;
+	public static final String ZOMBIE;
+	public static final String CORE;
+	public static final String OFFICER;
+	public static final String GM;
+	
+	/**
+	 * activity req 'settings'
+	 */
+	public static final String INITIAL_ACTIVITY_REQ;
+	public static final String ACTIVITY_REQ;
+	
+	/**
+	 * Uses for displaying Raid roles
 	 */
 	public static final String ROLE_TANK;
 	public static final String ROLE_DPS;
@@ -59,6 +75,13 @@ public final class FinalUtilProperties {
 		SIGNUP_CHAN_ID = prop.getProperty("SIGNUP_CHAN_ID");
 		O_CHAN_ID = prop.getProperty("O_CHAN_ID");
 		BOT_CHAN_ID = prop.getProperty("BOT_CHAN_ID");
+		SKEEVER = prop.getProperty("SKEEVER");
+		ZOMBIE = prop.getProperty("ZOMBIE");
+		CORE = prop.getProperty("CORE");
+		OFFICER = prop.getProperty("OFFICER");
+		GM = prop.getProperty("GM");
+		INITIAL_ACTIVITY_REQ = prop.getProperty("INITIAL_ACTIVITY_REQ");
+		ACTIVITY_REQ = prop.getProperty("ACTIVITY_REQ");
 		ROLE_TANK = prop.getProperty("ROLE_TANK");
 		ROLE_DPS = prop.getProperty("ROLE_DPS");
 		ROLE_HEALS = prop.getProperty("ROLE_HEALS");
