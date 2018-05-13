@@ -39,6 +39,7 @@ public final class FinalUtilProperties {
 	 * Uses for displaying Raid roles
 	 */
 	public static final String ROLE_TANK;
+	public static final String ROLE_MELEE;
 	public static final String ROLE_DPS;
 	public static final String ROLE_HEALS;
 	
@@ -83,6 +84,7 @@ public final class FinalUtilProperties {
 		INITIAL_ACTIVITY_REQ = prop.getProperty("INITIAL_ACTIVITY_REQ");
 		ACTIVITY_REQ = prop.getProperty("ACTIVITY_REQ");
 		ROLE_TANK = prop.getProperty("ROLE_TANK");
+		ROLE_MELEE = prop.getProperty("ROLE_MELEE");
 		ROLE_DPS = prop.getProperty("ROLE_DPS");
 		ROLE_HEALS = prop.getProperty("ROLE_HEALS");
 	}

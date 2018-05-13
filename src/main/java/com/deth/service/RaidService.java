@@ -37,7 +37,8 @@ public class RaidService {
 		Raid newRaid = new Raid(raidInfo[1].toLowerCase(), 
 				Integer.parseInt(raidInfo[2]), 
 				Integer.parseInt(raidInfo[3]), 
-				Integer.parseInt(raidInfo[4])
+				Integer.parseInt(raidInfo[4]),
+				Integer.parseInt(raidInfo[5])
 				);
 		anouncement += newRaid.getRaidName() + ". ";
 		if(raidRepository.raidCheck(newRaid)) {
@@ -132,7 +133,9 @@ public class RaidService {
 				raider.setRole(ROLE_HEALS);
 			} else if(paramsCheck[2].equalsIgnoreCase("tank") || paramsCheck[2].equalsIgnoreCase("meatshield") || paramsCheck[2].equals(ROLE_TANK)) {
 				raider.setRole(ROLE_TANK);
-			} else {
+			} else if (paramsCheck[2].equalsIgnoreCase("melee") || paramsCheck[2].equalsIgnoreCase("mdps") || paramsCheck[2].equalsIgnoreCase("mele")) {
+				raider.setRole(ROLE_MELEE);
+			}else {
 				raider.setRole(ROLE_DPS);
 			}
 		}
@@ -283,7 +286,9 @@ public class RaidService {
 			roster += "+------------+--------------+\n";
 			roster += "| Tanks: " + raid.getNumTank() + "/"+raid.getMaxTanks() + " | Heals: " + raid.getNumHeal() + "/" + raid.getMaxHeals() + "   |\n";
 			roster += "+------------+--------------+\n";
-			roster += "| Dps: "+ raid.getNumDps() + "/" + raid.getMaxDps() + "     | Total: " + raid.getStarters().size() + "/12   |\n";
+			roster += "| Melee: "+ + raid.getNumMeleeDps() + "/" + raid.getMaxMeleeDps() + " | Range: " + raid.getNumDps() + "/" + raid.getMaxDps() + "  |\n";
+			roster += "+------------+--------------+\n";
+			roster += "|     Total Raiders: "+ raid.getRaiders().size() + "/12      |\n" ;
 			roster += "+------------+--------------+\n";
 			return roster;
 		} else {

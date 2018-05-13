@@ -1,3 +1,4 @@
+com\deth\repository\AttendanceRepository.class
 com\deth\repository\RaidFileRepository.class
 com\deth\model\Raider.class
 com\deth\controller\RaidRosterController.class
@@ -5,9 +6,12 @@ com\deth\controller\CommandController.class
 com\deth\controller\RaidController.class
 com\deth\repository\MessageFileRepository.class
 com\deth\model\Raid.class
+com\deth\service\AttendanceService.class
 com\deth\DethDriver.class
 com\deth\service\RaidService.class
 com\deth\controller\ControllerCommandsInfo.class
 com\deth\util\FinalUtilProperties.class
 com\deth\service\MessageService.class
 com\deth\controller\InfoController.class
+com\deth\model\Attendance.class
+com\deth\controller\AttendanceController.class

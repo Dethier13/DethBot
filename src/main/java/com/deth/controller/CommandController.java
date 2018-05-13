@@ -131,6 +131,7 @@ public class CommandController extends ListenerAdapter{
 			}
 		} catch (Exception e) {
 			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("exception occurred: " + e).queue();
+			e.printStackTrace();
 			//event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("trace: " + e.).queue();
 		}
 		

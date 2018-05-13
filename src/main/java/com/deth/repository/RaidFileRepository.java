@@ -71,7 +71,8 @@ public class RaidFileRepository {
 			String[] rosterInfoParse = rosterInfo.split(" ");
 			raid.setMaxTanks(Integer.parseInt(rosterInfoParse[0]));
 			raid.setMaxHeals(Integer.parseInt(rosterInfoParse[1]));
-			raid.setMaxDps(Integer.parseInt(rosterInfoParse[2]));
+			raid.setMaxMeleeDps(Integer.parseInt(rosterInfoParse[2]));
+			raid.setMaxDps(Integer.parseInt(rosterInfoParse[3]));
 			String[] raidListParse;
 			while((readBuffer = bufferedReader.readLine())!= null) {
 				raidListParse = readBuffer.split(" ");
