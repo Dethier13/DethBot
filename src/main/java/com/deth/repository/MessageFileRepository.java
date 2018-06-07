@@ -37,6 +37,21 @@ private static final MessageFileRepository instance = new MessageFileRepository(
 		return message;
 	}
 	
+	public String readAttendanceHelp() throws IOException {
+		String message = "";
+		String fileName = ATTENDANCE_HELP;
+		System.out.println("filename: "+ fileName);
+		String readBuffer = "";
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+		System.out.println("br: " + bufferedReader.toString());
+		while((readBuffer = bufferedReader.readLine())!= null) {
+			System.out.println("read: " + readBuffer);
+			message += readBuffer+"\n";
+		}
+		System.out.println("msg: " + message);
+		return message;
+	}
+	
 	public String readRules() throws IOException{
 		String message = "";
 		String fileName = RULES_MESSAGE;
@@ -69,4 +84,6 @@ private static final MessageFileRepository instance = new MessageFileRepository(
 		}
 		return message;
 	}
+	
+	
 }

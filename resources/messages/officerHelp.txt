@@ -7,3 +7,5 @@ Available Officer commands are:
 -> !rc [name of raid] [custom Ai String]
 	-Calls all people that signed up for the raid.
 	-If you include a custom message, it'll display the custom AI in the string, if not it defaults to 'blood'.
+-> !attendance-help
+	-Shows all commands for managing raid activity.

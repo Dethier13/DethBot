@@ -13,6 +13,8 @@ public class Raid {
 	private int numHeal;
 	private int maxDps;
 	private int numDps;
+	private int maxMeleeDps;
+	private int numMeleeDps;
 	private List<Raider> raiders;
 	private List<Raider> starters;
 	private List<Raider> overflow;
@@ -28,9 +30,11 @@ public class Raid {
 		this.maxTanks = 0;
 		this.maxHeals = 0;
 		this.maxDps = 0;
+		this.maxMeleeDps=0;
 		this.numTank = 0;
 		this.numHeal = 0;
 		this.numDps = 0;
+		this.numMeleeDps=0;
 		this.starters= new ArrayList<>();
 		this.overflow= new ArrayList<>();
 	}
@@ -42,15 +46,17 @@ public class Raid {
 	 * @param maxHeals
 	 * @param maxDps
 	 */
-	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps) {
+	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, int maxMeleeDps) {
 		super();
 		this.raidName = raidName;
 		this.maxTanks = maxTanks;
 		this.maxHeals = maxHeals;
 		this.maxDps = maxDps;
+		this.maxMeleeDps=maxMeleeDps;
 		this.numTank = 0;
 		this.numHeal = 0;
 		this.numDps = 0;
+		this.numMeleeDps=0;
 		this.starters= new ArrayList<>();
 		this.overflow= new ArrayList<>();
 	}
@@ -63,18 +69,20 @@ public class Raid {
 	 * @param maxDps
 	 * @param raiders
 	 */
-	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, List<Raider> raiders) {
+	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, int maxMeleeDps, List<Raider> raiders) {
 		super();
 		this.raidName = raidName;
 		this.maxTanks = maxTanks;
 		this.maxHeals = maxHeals;
 		this.maxDps = maxDps;
+		this.maxMeleeDps=maxMeleeDps;
 		this.raiders = raiders;
 		this.starters= new ArrayList<>();
 		this.overflow= new ArrayList<>();
 		this.numTank = 0;
 		this.numHeal = 0;
 		this.numDps = 0;
+		this.numMeleeDps=0;
 		updateRosters();
 	}
 
@@ -150,6 +158,22 @@ public class Raid {
 
 	public void setMaxDps(int maxDps) {
 		this.maxDps = maxDps;
+	}
+	
+	public int getMaxMeleeDps() {
+		return maxMeleeDps;
+	}
+	
+	public void setMaxMeleeDps(int maxMeleeDps) {
+		this.maxMeleeDps=maxMeleeDps;
+	}
+	
+	public int getNumMeleeDps() {
+		return numMeleeDps;
+	}
+	
+	public void setNumMeleeDps(int numMeleeDps) {
+		this.numMeleeDps=numMeleeDps;
 	}
 
 	@Override
@@ -228,6 +252,7 @@ public class Raid {
 		overflow.removeAll(overflow);
 		numTank = 0;
 		numHeal = 0;
+		numMeleeDps = 0;
 		numDps = 0;
 		for(int i = 0; i < raiders.size(); i++) {
 			if(raiders.get(i).getRole().equals(ROLE_TANK)) {
@@ -250,19 +275,55 @@ public class Raid {
 			}
 		}
 		for(int i = 0; i < raiders.size(); i++) {
-			if (raiders.get(i).getRole().equals(ROLE_DPS)) {
-				this.numDps++;
-				if(numDps <= maxDps) {
-					starters.add(raiders.get(i));
+//			if(raiders.get(i).getRole().equals(ROLE_MELEE)) {
+//				this.numMeleeDps++;
+//				if(numMeleeDps <= maxMeleeDps) {
+//					starters.add(raiders.get(i));
+//				} else {
+//					overflow.add(raiders.get(i));
+//				}
+//			}
+//			if (raiders.get(i).getRole().equals(ROLE_DPS)) {
+//				this.numDps++;
+//				if(numDps <= maxDps) {
+//					starters.add(raiders.get(i));
+//				} else {
+//					overflow.add(raiders.get(i));
+//				}
+//			}
+			if(raiders.get(i).getRole().equals(ROLE_MELEE) || raiders.get(i).getRole().equals(ROLE_DPS)) {
+				if(raiders.get(i).getRole().equals(ROLE_MELEE)) {
+					System.out.println("melee detected.");
+					this.numMeleeDps++;
+					if(numMeleeDps <= maxMeleeDps) {
+						System.out.println("melee added to starters.");
+						starters.add(raiders.get(i));
+					} else {
+						System.out.println("melee added to overflow.");
+						overflow.add(raiders.get(i));
+					}
 				} else {
-					overflow.add(raiders.get(i));
+					this.numDps++;
+					if (numDps <= maxDps) {
+						System.out.println("ranged added to range spot.");
+						starters.add(raiders.get(i));
+//					} else if ( numMeleeDps <= maxMeleeDps) {
+//						this.numMeleeDps++;
+//						System.out.println("ranged added to melee spot.");
+//						starters.add(raiders.get(i));
+					} else {
+						overflow.add(raiders.get(i));
+					}
 				}
 			}
 		}
+		System.out.println("starters: " + starters.toString());
+		System.out.println("Overflow: " + overflow.toString());
+		System.out.println("max melee: " + maxMeleeDps + " current melee: " + numMeleeDps);
 	}
 	
 	public String toFileInfo() {
-		return ""+this.maxTanks + " " + this.maxHeals + " " + this.maxDps;
+		return ""+this.maxTanks + " " + this.maxHeals + " " + this.maxMeleeDps + " " + this.maxDps + " ";
 	}
 	
 	public String toFileRoster() {

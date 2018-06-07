@@ -1,6 +1,9 @@
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\controller\RaidRosterController.java
+C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\service\AttendanceService.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\service\RaidService.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\service\MessageService.java
+C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\controller\AttendanceController.java
+C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\repository\AttendanceRepository.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\controller\InfoController.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\model\Raider.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\DethDriver.java
@@ -11,3 +14,4 @@ C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\controller
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\repository\MessageFileRepository.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\repository\RaidFileRepository.java
 C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\util\FinalUtilProperties.java
+C:\Users\brian\Documents\workspace\Dbot3\Dbot3\src\main\java\com\deth\model\Attendance.java

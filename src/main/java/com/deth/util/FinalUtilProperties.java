@@ -20,9 +20,26 @@ public final class FinalUtilProperties {
 	public static final String BOT_CHAN_ID;
 	
 	/**
-	 * Uses for displaying roles
+	 * Discord Roles for attendance features
+	 * used for promoting from raids and exempting from attendance.
+	 */
+	public static final String SKEEVER;
+	public static final String ZOMBIE;
+	public static final String CORE;
+	public static final String OFFICER;
+	public static final String GM;
+	
+	/**
+	 * activity req 'settings'
+	 */
+	public static final String INITIAL_ACTIVITY_REQ;
+	public static final String ACTIVITY_REQ;
+	
+	/**
+	 * Uses for displaying Raid roles
 	 */
 	public static final String ROLE_TANK;
+	public static final String ROLE_MELEE;
 	public static final String ROLE_DPS;
 	public static final String ROLE_HEALS;
 	
@@ -31,11 +48,18 @@ public final class FinalUtilProperties {
 	 */
 	public static final String RAID_FILE_PATH = "resources/raids/";
 	public static final String DEFAULTS_FILE_PATH = "resources/defaults.txt";
+	public static final String RAID_ACTIVITY = "resources/attendance/raidActivity.txt";
+	public static final String LEAVE_OF_ABSCENCE = "resources/attendance/leaveOfAbscence.txt";
+	
 	public static final String GEN_HELP_FILE = "resources/messages/generalHelp.txt";
 	public static final String O_HELP_FILE = "resources/messages/officerHelp.txt";
+	public static final String ATTENDANCE_HELP = "resources/messages/attendanceHelp.txt";
+	
 	public static final String RULES_MESSAGE = "resources/messages/rules.txt";
 	public static final String RULES_MESSAGE2 = "resources/messages/rules2.txt";
 	public static final String RAID_SCHEDULE = "resources/messages/raidSchedule.txt";
+	
+	
 
 	
 	static {
@@ -52,7 +76,15 @@ public final class FinalUtilProperties {
 		SIGNUP_CHAN_ID = prop.getProperty("SIGNUP_CHAN_ID");
 		O_CHAN_ID = prop.getProperty("O_CHAN_ID");
 		BOT_CHAN_ID = prop.getProperty("BOT_CHAN_ID");
+		SKEEVER = prop.getProperty("SKEEVER");
+		ZOMBIE = prop.getProperty("ZOMBIE");
+		CORE = prop.getProperty("CORE");
+		OFFICER = prop.getProperty("OFFICER");
+		GM = prop.getProperty("GM");
+		INITIAL_ACTIVITY_REQ = prop.getProperty("INITIAL_ACTIVITY_REQ");
+		ACTIVITY_REQ = prop.getProperty("ACTIVITY_REQ");
 		ROLE_TANK = prop.getProperty("ROLE_TANK");
+		ROLE_MELEE = prop.getProperty("ROLE_MELEE");
 		ROLE_DPS = prop.getProperty("ROLE_DPS");
 		ROLE_HEALS = prop.getProperty("ROLE_HEALS");
 	}
