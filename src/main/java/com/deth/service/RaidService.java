@@ -288,7 +288,7 @@ public class RaidService {
 			roster += "+------------+--------------+\n";
 			roster += "| Melee: "+ + raid.getNumMeleeDps() + "/" + raid.getMaxMeleeDps() + " | Range: " + raid.getNumDps() + "/" + raid.getMaxDps() + "  |\n";
 			roster += "+------------+--------------+\n";
-			roster += "|     Total Raiders: "+ raid.getRaiders().size() + "/12      |\n" ;
+			roster += "|     Total Raiders: "+ raid.getStarters().size() + "/12      |\n" ;
 			roster += "+------------+--------------+\n";
 			return roster;
 		} else {
