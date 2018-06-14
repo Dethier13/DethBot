@@ -21,7 +21,7 @@ public class AttendanceController extends ControllerCommandsInfo{
 		getBasicInfo(event);
 		String message = "";
 		try {
-			message = attendanceService.showFUllAttendance(guild);
+			message = attendanceService.showFullAttendance(guild);
 			channel.sendMessage(message).queue();
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("failed to commit attendance " + ioe).queue();

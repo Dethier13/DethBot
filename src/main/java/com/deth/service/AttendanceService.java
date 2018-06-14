@@ -46,12 +46,14 @@ public class AttendanceService {
 		return message;
 	}
 	
-	public String showFUllAttendance(Guild guild) throws IOException{
+	public String showFullAttendance(Guild guild) throws IOException{
 		String message = "Entire attendance record on file:\n";
 		attendanceRepository.readAttendance();
 		List<Raider> fullAttendance = attendance.getFullAttendance();
 		for(Raider r: fullAttendance) {
-			message += "" + guild.getMemberById(r.getId()).getEffectiveName() +" "+ r.getRaidDate() + "\n";
+			if(guild.getMemberById(r.getId())!= null) {
+				message += "" + guild.getMemberById(r.getId()).getEffectiveName() +" "+ r.getRaidDate() + "\n";
+			}
 		}
 		return message;
 	}
