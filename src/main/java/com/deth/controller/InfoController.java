@@ -86,6 +86,7 @@ public class InfoController extends ControllerCommandsInfo{
 		final String rules1;
 		final String rules2;
 		try {
+			guild.getController().addSingleRoleToMember(guild.getMemberById(user.getId()), guild.getRoleById(SKEEVER)).queue();
 			rules1 = msgService.rules();
 			user.openPrivateChannel().queue((channel) ->
 			{
