@@ -95,7 +95,7 @@ public class RaidService {
 		if(raid.getOverflow().size() > 0) {
 			roster+= "--------- \nOverflow: \n--------- \nThe following people please be ready to sub in if required:\n";
 			for(Raider r: raid.getOverflow()) {
-				roster+=guild.getMemberById(r.getId());
+				roster+=guild.getMemberById(r.getId()) + ", ";
 			}
 		}
 		Attendance.getInstance().setRaiders(raid.getRaiders());
