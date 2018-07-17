@@ -98,7 +98,7 @@ public class AttendanceService {
 				guild.getController().removeSingleRoleFromMember(member, guild.getRoleById(SKEEVER)).queue();
 				if(!member.getRoles().contains(guild.getRoleById(ZOMBIE))) {
 					guild.getController().addSingleRoleToMember(member, guild.getRoleById(ZOMBIE)).queue(); 
-					message+=""+ member.getEffectiveName();
+					message+=""+ member.getEffectiveName() + "\n";
 				}
 			}
 		}
