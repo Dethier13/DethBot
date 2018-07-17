@@ -34,7 +34,7 @@ public class ControllerCommandsInfo {
 		
 		message = event.getMessage();
 		channel = event.getChannel();
-		msg = message.getContentDisplay();
+		msg = message.getContentDisplay().toLowerCase();
 		
 		guild = event.getGuild();
 		textChannel = event.getTextChannel();
