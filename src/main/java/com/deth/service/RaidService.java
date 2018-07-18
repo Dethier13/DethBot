@@ -113,7 +113,7 @@ public class RaidService {
 		if(paramsCheck.length < 2) {
 			return "You forgot to specify the raid you want to sign up for.";
 		}
-		String raidName = paramsCheck[1];
+		String raidName = paramsCheck[1].toLowerCase();
 		Raid raid = new Raid(raidName);
 		if(!raidRepository.raidCheck(raid)) {
 			return "Sorry, unable to find that raid";
