@@ -28,6 +28,7 @@ public final class FinalUtilProperties {
 	public static final String CORE;
 	public static final String OFFICER;
 	public static final String GM;
+	public static final String[] EXEMPT;
 	
 	/**
 	 * activity req 'settings'
@@ -81,6 +82,7 @@ public final class FinalUtilProperties {
 		CORE = prop.getProperty("CORE");
 		OFFICER = prop.getProperty("OFFICER");
 		GM = prop.getProperty("GM");
+		EXEMPT = prop.getProperty("exempt").split(",");
 		INITIAL_ACTIVITY_REQ = prop.getProperty("INITIAL_ACTIVITY_REQ");
 		ACTIVITY_REQ = prop.getProperty("ACTIVITY_REQ");
 		ROLE_TANK = prop.getProperty("ROLE_TANK");
