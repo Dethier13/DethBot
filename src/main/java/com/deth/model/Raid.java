@@ -7,6 +7,7 @@ import static com.deth.util.FinalUtilProperties.*;
 
 public class Raid {
 	private String raidName;
+	private String raidMsg;
 	private int maxTanks;
 	private int numTank;
 	private int maxHeals;
@@ -27,6 +28,7 @@ public class Raid {
 	 */
 	public Raid(String raidName) {
 		this.raidName = raidName;
+		this.raidMsg="";
 		this.maxTanks = 0;
 		this.maxHeals = 0;
 		this.maxDps = 0;
@@ -49,6 +51,7 @@ public class Raid {
 	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, int maxMeleeDps) {
 		super();
 		this.raidName = raidName;
+		this.raidMsg="";
 		this.maxTanks = maxTanks;
 		this.maxHeals = maxHeals;
 		this.maxDps = maxDps;
@@ -72,6 +75,7 @@ public class Raid {
 	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, int maxMeleeDps, List<Raider> raiders) {
 		super();
 		this.raidName = raidName;
+		this.raidMsg="";
 		this.maxTanks = maxTanks;
 		this.maxHeals = maxHeals;
 		this.maxDps = maxDps;
@@ -92,6 +96,14 @@ public class Raid {
 
 	public void setRaidName(String raidName) {
 		this.raidName = raidName;
+	}
+	
+	public String getRaidMsg() {
+		return raidMsg;
+	}
+	
+	public void setRaidMsg(String raidMsg) {
+		this.raidMsg = raidMsg;
 	}
 
 	public int getNumTank() {
@@ -323,7 +335,8 @@ public class Raid {
 	}
 	
 	public String toFileInfo() {
-		return ""+this.maxTanks + " " + this.maxHeals + " " + this.maxMeleeDps + " " + this.maxDps + " ";
+		System.out.println(""+raidMsg);
+		return ""+this.maxTanks + " " + this.maxHeals + " " + this.maxMeleeDps + " " + this.maxDps + " \n" + this.raidMsg;
 	}
 	
 	public String toFileRoster() {

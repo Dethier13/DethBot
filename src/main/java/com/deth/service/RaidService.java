@@ -41,6 +41,14 @@ public class RaidService {
 				Integer.parseInt(raidInfo[5])
 				);
 		anouncement += newRaid.getRaidName() + ". ";
+		String[] raidMessage = msg.split("msg:");
+		if(raidMessage.length > 1) {
+			anouncement += raidMessage[1];
+			newRaid.setRaidMsg(raidMessage[1]);
+			System.out.println("msg: " + raidMessage[1]);
+			System.out.println("raid msg: " + newRaid.getRaidMsg());
+		}
+		
 		if(raidRepository.raidCheck(newRaid)) {
 			return "That raid is already open.";
 		}
@@ -49,10 +57,7 @@ public class RaidService {
 			return null;
 		}
 		
-		String[] raidMessage = msg.split("msg:");
-		if(raidMessage.length > 1) {
-			anouncement += raidMessage[1];
-		}
+		
 		
 		
 		return anouncement;
@@ -272,7 +277,7 @@ public class RaidService {
 			return "Sorry, unable to find that raid";
 		}
 		raid = raidRepository.readRaid(raid);
-		String roster = "";
+		String roster = raid.getRaidMsg() + "\nRoster:";
 		if(raid.getStarters().size() > 0) {
 			for(Raider r: raid.getStarters()) {
 				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + "\n";
