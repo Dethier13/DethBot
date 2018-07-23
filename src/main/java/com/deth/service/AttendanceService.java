@@ -7,10 +7,12 @@ import static com.deth.util.FinalUtilProperties.INITIAL_ACTIVITY_REQ;
 import static com.deth.util.FinalUtilProperties.OFFICER;
 import static com.deth.util.FinalUtilProperties.SKEEVER;
 import static com.deth.util.FinalUtilProperties.ZOMBIE;
+import static com.deth.util.FinalUtilProperties.EXEMPT;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.deth.model.Attendance;
@@ -114,9 +116,14 @@ public class AttendanceService {
 		long days = 0;
 		List<Member> members = guild.getMembers();
 		Role skeever = guild.getRoleById(SKEEVER);
-		Role core = guild.getRoleById(CORE);
-		Role officer = guild.getRoleById(OFFICER);
-		Role gm = guild.getRoleById(GM);
+		//Role core = guild.getRoleById(CORE);
+		//Role officer = guild.getRoleById(OFFICER);
+		//Role gm = guild.getRoleById(GM);
+		Role[] exemptions = new Role[EXEMPT.length];
+		for (int i = 0; i < EXEMPT.length; i++) {
+			exemptions[i] = guild.getRoleById(EXEMPT[i]);
+		}
+		boolean exempt = false;
 		Member member;
 		
 		for (int i = 0; i < members.size(); i++) {
@@ -132,7 +139,13 @@ public class AttendanceService {
 					for(Raider r: attend) {
 						if(member.getUser().getId().equals(r.getId())){
 							days = DAYS.between(r.getRaidDate(),date);
-							if(days > Integer.parseInt(ACTIVITY_REQ) && !(member.getRoles().contains(gm) || member.getRoles().contains(officer) || member.getRoles().contains(core))) {
+							if(days > Integer.parseInt(ACTIVITY_REQ)) {
+								for(int j = 0; j <exemptions.length; j++)
+									if(member.getRoles().contains(exemptions[i])) {
+										exempt = true;
+									}
+							}
+							if (!exempt) {
 								message+=""+member.getEffectiveName() + " for not raiding with us after " + days + " days.\n";
 							}
 						}
