@@ -38,6 +38,12 @@ public class CommandController extends ListenerAdapter{
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
+			} else if (msg.startsWith("!update")) {
+				if(channel.getId().equals(O_CHAN_ID)) {
+					raidController.updateRaid(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			} else if (msg.startsWith("!close")) {
 				if(channel.getId().equals(O_CHAN_ID)) {
 					raidController.closeRaid(event);

@@ -26,6 +26,22 @@ public class RaidController extends ControllerCommandsInfo{
 		}
 	}
 	
+	public void updateRaid(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		String message = "";
+		try {
+			message = raidService.updateRaid(msg);
+			if (message == null) {
+				channel.sendMessage("Double check that command dumbass, somethings wrong with it.").queue();
+			}
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to update " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to update " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error updating raid. " ).queue();
+		}
+		channel.sendMessage(message).queue();
+	}
+	
 	public void closeRaid(MessageReceivedEvent event) {
 		getBasicInfo(event);
 		String message = "";

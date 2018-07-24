@@ -48,7 +48,7 @@ public class Raid {
 	 * @param maxHeals
 	 * @param maxDps
 	 */
-	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, int maxMeleeDps) {
+	public Raid(String raidName, int maxTanks, int maxHeals, int maxMeleeDps, int maxDps) {
 		super();
 		this.raidName = raidName;
 		this.raidMsg="";
@@ -72,7 +72,7 @@ public class Raid {
 	 * @param maxDps
 	 * @param raiders
 	 */
-	public Raid(String raidName, int maxTanks, int maxHeals, int maxDps, int maxMeleeDps, List<Raider> raiders) {
+	public Raid(String raidName, int maxTanks, int maxHeals, int maxMeleeDps, int maxDps, List<Raider> raiders) {
 		super();
 		this.raidName = raidName;
 		this.raidMsg="";
