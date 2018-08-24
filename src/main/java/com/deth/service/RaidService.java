@@ -41,6 +41,14 @@ public class RaidService {
 				Integer.parseInt(raidInfo[5])
 				);
 		anouncement += newRaid.getRaidName() + ". ";
+		String[] raidMessage = msg.split("msg:");
+		if(raidMessage.length > 1) {
+			anouncement += raidMessage[1];
+			newRaid.setRaidMsg(raidMessage[1]);
+			System.out.println("msg: " + raidMessage[1]);
+			System.out.println("raid msg: " + newRaid.getRaidMsg());
+		}
+		
 		if(raidRepository.raidCheck(newRaid)) {
 			return "That raid is already open.";
 		}
@@ -48,14 +56,46 @@ public class RaidService {
 		if(!raidRepository.createRaid(newRaid)) {
 			return null;
 		}
-		
-		String[] raidMessage = msg.split("msg:");
-		if(raidMessage.length > 1) {
-			anouncement += raidMessage[1];
-		}
-		
-		
 		return anouncement;
+	}
+	
+	public String updateRaid(String msg) throws IOException{
+		String raidName = msg.split(" ")[1];
+		Raid raid = new Raid(raidName);
+		if(!raidRepository.raidCheck(raid)) {
+			return "Sorry, unable to find that raid";
+		}
+		raid = raidRepository.readRaid(raid);
+		if(msg.split(" ")[2].equals("roles") || msg.split(" ")[2].equals("role")) {
+			//update roles
+			raid.setMaxTanks(Integer.parseInt(msg.split(" ")[3]));
+			raid.setMaxHeals(Integer.parseInt(msg.split(" ")[4]));
+			raid.setMaxMeleeDps(Integer.parseInt(msg.split(" ")[5]));
+			raid.setMaxDps(Integer.parseInt(msg.split(" ")[6]));
+			boolean isWritten = raidRepository.writeRaid(raid);
+			if(!isWritten) {
+				
+				return "Something happened when adding you to the raid, please try again later.";
+			}
+			//feedback
+			return "Raid " + raid.getRaidName() + " has been update to " + raid.getMaxTanks() + " tanks, " + raid.getMaxHeals() + " healers, " + raid.getMaxMeleeDps() + " melee dps, and " + raid.getMaxDps() + " ranged dps";
+			
+		} else if (msg.split(" ")[2].equals("message") || msg.split(" ")[2].equals("mesage") || msg.split(" ")[2].equals("msg")) {
+			//update raid message
+			String debug = msg.split(" ")[3];
+			System.out.println("debug: " + debug);
+			String msgUpdate = msg.substring(msg.indexOf(debug));
+			raid.setRaidMsg(msgUpdate);
+			boolean isWritten = raidRepository.writeRaid(raid);
+			if(!isWritten) {
+				
+				return "Something happened when adding you to the raid, please try again later.";
+			}
+			//feedback
+			return "Raid " + raid.getRaidName() + " now has the following message: " + msgUpdate;
+		} else {
+			return "Please specify if you want to update either the raid roles or the raid message";
+		}
 	}
 	
 	public String closeRaid(String msg) throws IOException{
@@ -272,7 +312,7 @@ public class RaidService {
 			return "Sorry, unable to find that raid";
 		}
 		raid = raidRepository.readRaid(raid);
-		String roster = "";
+		String roster = raid.getRaidMsg() + "\nRoster:";
 		if(raid.getStarters().size() > 0) {
 			for(Raider r: raid.getStarters()) {
 				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + "\n";
