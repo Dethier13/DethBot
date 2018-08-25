@@ -1,8 +1,12 @@
 Available Officer commands are:
--> !open [name of raid] [#tanks] [#heals] [#dps] msg: [custom message to display].
+-> !open [name of raid] [#tanks] [#heals] [#melee dps] [#ranged dps] msg: [custom message to display].
 	-Opens new raid and makes announcement  in signup channel.
 	-The #'s for each role are required, as they are used to determine overflow.
 	-The custom msg is detected by the 'msg: ' tag, if that isn't there there will be no custom message.
+-> !update [name of raid] [what to update]
+    - you are able to update "role"/"roles" or "msg"/"message"
+    - roles lets you update how many of each role in the current raid, same format as opening a raid, [tanks] [heals] [melee] [ranged]
+    - msg allows you to change the msg displayed in the 'status' command
 -> !close [name of raid]\n-used to close raid and delete file used.
 -> !rc [name of raid] [custom Ai String]
 	-Calls all people that signed up for the raid.

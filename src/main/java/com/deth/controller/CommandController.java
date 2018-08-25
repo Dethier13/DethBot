@@ -135,6 +135,8 @@ public class CommandController extends ListenerAdapter{
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
+			} else if (msg.startsWith("!schedule")) {
+				infoController.raidSchedule(event);
 			}
 		} catch (Exception e) {
 			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("exception occurred: " + e).queue();

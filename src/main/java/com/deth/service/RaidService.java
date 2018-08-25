@@ -105,7 +105,9 @@ public class RaidService {
 		if(!raidRepository.raidCheck(closedRaid)) {
 			return "Raid not found.";
 		}
-		
+		closedRaid = raidRepository.readRaid(closedRaid);
+		Attendance.getInstance().setRaiders(closedRaid.getRaiders());
+		System.out.println(Attendance.getInstance().getRaiders());
 		if(!raidRepository.deleteRaid(closedRaid)) {
 			return null;
 		}
@@ -138,7 +140,7 @@ public class RaidService {
 				roster+=guild.getMemberById(r.getId()).getEffectiveName() + ", ";
 			}
 		}
-		Attendance.getInstance().setRaiders(raid.getRaiders());
+		
 		return roster;
 	}
 	
@@ -150,6 +152,7 @@ public class RaidService {
 		String[] paramsCheck = msg.split(" ");
 		boolean isUpdate = false;
 		boolean isOverflow = false;
+		boolean isRanged = false;
 		if(paramsCheck.length < 2) {
 			return "You forgot to specify the raid you want to sign up for.";
 		}
@@ -177,6 +180,7 @@ public class RaidService {
 				raider.setRole(ROLE_MELEE);
 			}else {
 				raider.setRole(ROLE_DPS);
+				isRanged = true;
 			}
 		}
 	
@@ -199,7 +203,7 @@ public class RaidService {
 		}
 
 		
-		//check if overflow.
+		//check if overflow
 		if(raid.getOverflow().size() > 0) {
 			List<Raider> overflow = raid.getOverflow();
 			for(Raider r: overflow) {
@@ -208,11 +212,18 @@ public class RaidService {
 				}
 			}
 		}
+		
+		
 	
 		String message = "" + member.getEffectiveName() + " successfully signed up for " + raidName + " as " + raider.getRole();
 		if(isUpdate) {
 			message =  member.getEffectiveName() + " successfully updated role for " + raidName + " to " + raider.getRole();
 		}
+		
+		if( raider.getRole().equals(ROLE_MELEE) && isRanged) {
+			message += " your role was changed to melee because ranged spots are full, this doesnt mean you need to bring a melee toon.";
+		}
+		
 		if(isOverflow) {
 			message += " but the raid is full for that role, you've been added to overflow.";
 		}
@@ -312,8 +323,8 @@ public class RaidService {
 			return "Sorry, unable to find that raid";
 		}
 		raid = raidRepository.readRaid(raid);
-		String roster = raid.getRaidMsg() + "\nRoster:";
-		if(raid.getStarters().size() > 0) {
+		String roster = raid.getRaidMsg() + "\nRoster:\n";
+		if(raid.getRaiders().size() > 0) {
 			for(Raider r: raid.getStarters()) {
 				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + "\n";
 			}
@@ -328,7 +339,7 @@ public class RaidService {
 			roster += "+------------+--------------+\n";
 			roster += "| Melee: "+ + raid.getNumMeleeDps() + "/" + raid.getMaxMeleeDps() + " | Range: " + raid.getNumDps() + "/" + raid.getMaxDps() + "  |\n";
 			roster += "+------------+--------------+\n";
-			roster += "|     Total Raiders: "+ raid.getStarters().size() + "/12      |\n" ;
+			roster += "|     Total Raiders: "+ raid.getStarters().size() + "/" + (raid.getMaxDps() +raid.getMaxHeals()+raid.getMaxMeleeDps()+raid.getMaxTanks())+"      |\n" ;
 			roster += "+------------+--------------+\n";
 			return roster;
 		} else {

@@ -287,22 +287,6 @@ public class Raid {
 			}
 		}
 		for(int i = 0; i < raiders.size(); i++) {
-//			if(raiders.get(i).getRole().equals(ROLE_MELEE)) {
-//				this.numMeleeDps++;
-//				if(numMeleeDps <= maxMeleeDps) {
-//					starters.add(raiders.get(i));
-//				} else {
-//					overflow.add(raiders.get(i));
-//				}
-//			}
-//			if (raiders.get(i).getRole().equals(ROLE_DPS)) {
-//				this.numDps++;
-//				if(numDps <= maxDps) {
-//					starters.add(raiders.get(i));
-//				} else {
-//					overflow.add(raiders.get(i));
-//				}
-//			}
 			if(raiders.get(i).getRole().equals(ROLE_MELEE) || raiders.get(i).getRole().equals(ROLE_DPS)) {
 				if(raiders.get(i).getRole().equals(ROLE_MELEE)) {
 					System.out.println("melee detected.");
@@ -315,14 +299,16 @@ public class Raid {
 						overflow.add(raiders.get(i));
 					}
 				} else {
-					this.numDps++;
-					if (numDps <= maxDps) {
-						System.out.println("ranged added to range spot.");
+					
+					if (numDps < maxDps) {
+						this.numDps++;
+						System.out.println("ranged added to range spot. num: " + numDps + "/" + maxDps);
 						starters.add(raiders.get(i));
-//					} else if ( numMeleeDps <= maxMeleeDps) {
-//						this.numMeleeDps++;
-//						System.out.println("ranged added to melee spot.");
-//						starters.add(raiders.get(i));
+					} else if ( numMeleeDps < maxMeleeDps) {
+						this.numMeleeDps++;
+						System.out.println("ranged added to melee spot. num: "+ numMeleeDps + "/" + maxMeleeDps);
+						raiders.get(i).setRole(ROLE_MELEE);
+						starters.add(raiders.get(i));
 					} else {
 						overflow.add(raiders.get(i));
 					}
@@ -331,7 +317,6 @@ public class Raid {
 		}
 		System.out.println("starters: " + starters.toString());
 		System.out.println("Overflow: " + overflow.toString());
-		System.out.println("max melee: " + maxMeleeDps + " current melee: " + numMeleeDps);
 	}
 	
 	public String toFileInfo() {

@@ -92,6 +92,7 @@ public class AttendanceService {
 	
 	private String promoteSkeevers(Guild guild) {
 		String message = "Promoted the folowing members:\n";
+		System.out.println(attendance.getRaiders());
 		List<Raider> active = attendance.getRaiders();
 		Member member;
 		for(Raider r : active ) {
@@ -103,6 +104,9 @@ public class AttendanceService {
 					message+=""+ member.getEffectiveName() + "\n";
 				}
 			}
+		}
+		if(message.equals("Promoted the folowing members:\n")) {
+			return "";
 		}
 		return message;
 	}
