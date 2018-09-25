@@ -82,7 +82,7 @@ public class AttendanceService {
 		return message;
 	}
 	public String commitAttendance(Guild guild) throws IOException{
-		String message = "Current raid attendance updated, raid roster cleared, you can no longer change the raid's attendance.\n";
+		String message = "Raid attendance commited.\n";
 		attendanceRepository.readAttendance();
 		message+=promoteSkeevers(guild);
 		attendance.update();
@@ -94,6 +94,7 @@ public class AttendanceService {
 		String message = "Promoted the folowing members:\n";
 		System.out.println(attendance.getRaiders());
 		List<Raider> active = attendance.getRaiders();
+		boolean promotion = false;
 		Member member;
 		for(Raider r : active ) {
 			member = guild.getMemberById(r.getId());
@@ -102,10 +103,11 @@ public class AttendanceService {
 				if(!member.getRoles().contains(guild.getRoleById(ZOMBIE))) {
 					guild.getController().addSingleRoleToMember(member, guild.getRoleById(ZOMBIE)).queue(); 
 					message+=""+ member.getEffectiveName() + "\n";
+					promotion = true;
 				}
 			}
 		}
-		if(message.equals("Promoted the folowing members:\n")) {
+		if(!promotion) {
 			return "";
 		}
 		return message;

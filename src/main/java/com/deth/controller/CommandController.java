@@ -29,7 +29,7 @@ public class CommandController extends ListenerAdapter{
 		User user = event.getAuthor();
 		Message message = event.getMessage();
 		MessageChannel channel = event.getChannel();
-		String msg = message.getContentDisplay();
+		String msg = message.getContentDisplay().toLowerCase();
 		
 		try {
 			if (msg.startsWith("!open")) {

@@ -67,35 +67,68 @@ public class RaidService {
 		}
 		raid = raidRepository.readRaid(raid);
 		if(msg.split(" ")[2].equals("roles") || msg.split(" ")[2].equals("role")) {
-			//update roles
-			raid.setMaxTanks(Integer.parseInt(msg.split(" ")[3]));
-			raid.setMaxHeals(Integer.parseInt(msg.split(" ")[4]));
-			raid.setMaxMeleeDps(Integer.parseInt(msg.split(" ")[5]));
-			raid.setMaxDps(Integer.parseInt(msg.split(" ")[6]));
-			boolean isWritten = raidRepository.writeRaid(raid);
-			if(!isWritten) {
-				
-				return "Something happened when adding you to the raid, please try again later.";
-			}
-			//feedback
-			return "Raid " + raid.getRaidName() + " has been update to " + raid.getMaxTanks() + " tanks, " + raid.getMaxHeals() + " healers, " + raid.getMaxMeleeDps() + " melee dps, and " + raid.getMaxDps() + " ranged dps";
-			
-		} else if (msg.split(" ")[2].equals("message") || msg.split(" ")[2].equals("mesage") || msg.split(" ")[2].equals("msg")) {
-			//update raid message
-			String debug = msg.split(" ")[3];
-			System.out.println("debug: " + debug);
-			String msgUpdate = msg.substring(msg.indexOf(debug));
-			raid.setRaidMsg(msgUpdate);
-			boolean isWritten = raidRepository.writeRaid(raid);
-			if(!isWritten) {
-				
-				return "Something happened when adding you to the raid, please try again later.";
-			}
-			//feedback
-			return "Raid " + raid.getRaidName() + " now has the following message: " + msgUpdate;
+//			//update roles
+//			raid.setMaxTanks(Integer.parseInt(msg.split(" ")[3]));
+//			raid.setMaxHeals(Integer.parseInt(msg.split(" ")[4]));
+//			raid.setMaxMeleeDps(Integer.parseInt(msg.split(" ")[5]));
+//			raid.setMaxDps(Integer.parseInt(msg.split(" ")[6]));
+//			boolean isWritten = raidRepository.writeRaid(raid);
+//			if(!isWritten) {
+//				
+//				return "Something happened when adding you to the raid, please try again later.";
+//			}
+//			//feedback
+//			return "Raid " + raid.getRaidName() + " has been update to " + raid.getMaxTanks() + " tanks, " + raid.getMaxHeals() + " healers, " + raid.getMaxMeleeDps() + " melee dps, and " + raid.getMaxDps() + " ranged dps";
+//			
+			return updateRoles(raid,msg);
+		} else if (msg.split(" ")[2].equals("message:") || msg.split(" ")[2].equals("mesage:") || msg.split(" ")[2].equals("msg:")) {
+//			//update raid message
+//			String debug = msg.split(" ")[3];
+//			System.out.println("debug: " + debug);
+//			String msgUpdate = msg.substring(msg.indexOf(debug));
+//			raid.setRaidMsg(msgUpdate);
+//			boolean isWritten = raidRepository.writeRaid(raid);
+//			if(!isWritten) {
+//				
+//				return "Something happened when adding you to the raid, please try again later.";
+//			}
+//			//feedback
+//			return "Raid " + raid.getRaidName() + " now has the following message: " + msgUpdate;
+			return updateMsg(raid, msg);
 		} else {
 			return "Please specify if you want to update either the raid roles or the raid message";
 		}
+	}
+	
+	private String updateRoles(Raid raid, String msg) throws IOException{
+		raid.setMaxTanks(Integer.parseInt(msg.split(" ")[3]));
+		raid.setMaxHeals(Integer.parseInt(msg.split(" ")[4]));
+		raid.setMaxMeleeDps(Integer.parseInt(msg.split(" ")[5]));
+		raid.setMaxDps(Integer.parseInt(msg.split(" ")[6]));
+		boolean isWritten = raidRepository.writeRaid(raid);
+		if(!isWritten) {
+			
+			return "Something happened when adding you to the raid, please try again later.";
+		}
+		
+		
+		return "Raid " + raid.getRaidName() + " has been update to " + raid.getMaxTanks() + " tanks, " + raid.getMaxHeals() + " healers, " + raid.getMaxMeleeDps() + " melee dps, and " + raid.getMaxDps() + " ranged dps";
+		
+	}
+	
+	private String updateMsg(Raid raid, String msg) throws IOException{
+		//update raid message
+//		String debug = msg.split(" ")[3];
+//		System.out.println("debug: " + debug);
+		String msgUpdate = msg.substring(msg.indexOf(':')+1);
+		raid.setRaidMsg(msgUpdate);
+		boolean isWritten = raidRepository.writeRaid(raid);
+		if(!isWritten) {
+			
+			return "Something happened when updating the raid, please try again later.";
+		}
+		//feedback
+		return "Raid " + raid.getRaidName() + " now has the following message: " + msgUpdate;
 	}
 	
 	public String closeRaid(String msg) throws IOException{
