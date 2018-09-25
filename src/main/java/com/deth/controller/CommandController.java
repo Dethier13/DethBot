@@ -47,7 +47,9 @@ public class CommandController extends ListenerAdapter{
 			} else if (msg.startsWith("!close")) {
 				if(channel.getId().equals(O_CHAN_ID)) {
 					raidController.closeRaid(event);
-					attendanceController.commitAttendance(event);
+					if(!msg.contains("cancel") && !msg.contains("cancelled")) {
+						attendanceController.commitAttendance(event);
+					}
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
