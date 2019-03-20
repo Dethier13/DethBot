@@ -76,6 +76,22 @@ public class RaidController extends ControllerCommandsInfo{
 		}	
 	}
 	
+	public void notifyRaid(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		try {
+			String message = raidService.notifyRaid(msg);
+			if (message == null) {
+				channel.sendMessage("Double check that command dumbass, somethings wrong with it.").queue();
+			}
+			guild.getTextChannelById(SIGNUP_CHAN_ID).sendMessage(message).queue();
+			channel.sendMessage("Raiders notified").queue();;
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("notification failed " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("notification failed " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("notification failed. " ).queue();
+		}	
+	}
+	
 	public void rollcall(MessageReceivedEvent event) {
 		getBasicInfo(event);
 		try {

@@ -9,7 +9,7 @@ Available Officer commands are:
     - msg allows you to change the msg displayed in the 'status' command
     - tier lets you lower the tier of the raid to let more people signup.
 -> !remove [name of raid] [name of raider]
-	- used for when someone doesnt show up to a raid, or excess overflow.
+	- used for when someone doesn't show up to a raid, or excess overflow.
 	- always remove ppl that weren't in the raid BEFORE closing the raid.
 -> !close [name of raid] 
 	- used to close raid and delete file used.
@@ -17,8 +17,11 @@ Available Officer commands are:
 -> !cancel [name of raid] [msg: output to signup channel]
 	-used to cancel raids.
 	-cancelled raids don't give credit to signups.
+-> !notify [name of raid] [msg: (what you wana notify them for, DONT NOTIFY FOR DUMB SHIT!)]
+	- tags everyone that signed up for the raid (overflow included).
 -> !rc [name of raid] [custom Ai String]
-	-Calls all people that signed up for the raid.
+	-tags all starters for the raid.
+	- mentions overflow to be ready to fill in but doesnt tag them.
 	-If you include a custom message, it'll display the custom AI in the string, if not it defaults to 'blood'.
 -> !attendance-help
 	-Shows all commands for managing raid activity.

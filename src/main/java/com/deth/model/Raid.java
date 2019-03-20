@@ -334,6 +334,8 @@ public class Raid {
 					} else if ( numMeleeDps < maxMeleeDps) {
 						this.numMeleeDps++;
 						System.out.println("ranged added to melee spot. num: "+ numMeleeDps + "/" + maxMeleeDps);
+						raiders.get(i).setPosition("melee");
+						System.out.println(raiders.get(i).getId() + "melee position");
 						//raiders.get(i).setRole(ROLE_MELEE);
 						starters.add(raiders.get(i));
 					} else {

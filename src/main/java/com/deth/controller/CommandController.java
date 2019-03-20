@@ -41,6 +41,8 @@ public class CommandController extends ListenerAdapter{
 			} else if (msg.startsWith("!update")) {
 				if(channel.getId().equals(LEAD_CHAN_ID)) {
 					raidController.updateRaid(event);
+				} else if (channel.getId().equals(SIGNUP_CHAN_ID)){	
+					rosterController.updateInfo(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
@@ -57,7 +59,7 @@ public class CommandController extends ListenerAdapter{
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
-			} else if (msg.startsWith("!su")) {
+			} else if (msg.startsWith("!su") || msg.startsWith("!signup")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
 					rosterController.signup(event);
 				} else {
@@ -89,6 +91,12 @@ public class CommandController extends ListenerAdapter{
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
+			} else if (msg.startsWith("!notify")) {
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
+					raidController.notifyRaid(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			}  else if (msg.startsWith("!status")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
 					//channel.sendMessage("Processing...").queue(); 
@@ -97,9 +105,17 @@ public class CommandController extends ListenerAdapter{
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			} else if (msg.startsWith("!raidlist")) {
-				raidController.raidList(event);
+				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
+					raidController.raidList(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			} else if (msg.startsWith("!raidhelp")) {
-				infoController.raidHelp(event);
+				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
+					infoController.raidHelp(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			} else if (msg.startsWith("!rules")) {
 				infoController.rules(event);
 			} else if (msg.startsWith("!attendance-raid")) {

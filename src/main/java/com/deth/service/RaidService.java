@@ -82,7 +82,6 @@ public class RaidService {
 		}
 	}
 		
-	
 	private String updateRoles(Raid raid, String msg) throws IOException{
 		raid.setMaxTanks(Integer.parseInt(msg.split(" ")[3]));
 		raid.setMaxHeals(Integer.parseInt(msg.split(" ")[4]));
@@ -122,6 +121,57 @@ public class RaidService {
 			return "Something happened when updating the raid, please try again later.";
 		}
 		return "Raid " + raid.getRaidName() + " now has the following tier: " + tier;
+	}
+	
+	public String updateInfo(Member member,Guild guild,String msg) throws IOException{
+		boolean isUpdate = false;
+		String info = "";
+		String[] paramsCheck = msg.split(" ");
+		if(paramsCheck.length < 2) {
+			return "You forgot to specify the raid you want to sign up for.";
+		}
+		if (!msg.contains("msg:")) {
+			return "you forgot to include the info to update with.";
+		}
+		if(msg.contains("msg: ")) {
+			System.out.println("----------------------\n info detected");
+			info = msg.substring(msg.indexOf("msg:")+ 5);
+			System.out.println(info);
+			msg = msg.substring(0, msg.indexOf("msg:"));
+			System.out.println(msg);
+			System.out.println("info end\n------------------");
+		}
+		String raidName = paramsCheck[1].toLowerCase();
+		Raid raid = new Raid(raidName);
+		if(!raidRepository.raidCheck(raid)) {
+			return "Sorry, unable to find that raid";
+		}
+		raid = raidRepository.readRaid(raid);
+	
+		Raider raider = new Raider(member.getUser().getId(),"");
+		List<Raider> raiders = raid.getRaiders();
+
+		for(Raider r: raiders) {
+			if(r.getId().equals(raider.getId())) {
+				isUpdate = true;
+				r.setInfo(info);
+				raid.setRaiders(raiders);
+				break;
+			}
+		}
+		
+		boolean isWritten = raidRepository.writeRaid(raid);
+		if(!isWritten) {
+			
+			return "Something happened when adding you to the raid, please try again later.";
+		}
+		
+		if (isUpdate) {
+			return "You set the following as your info for that raid: " + info;
+		}
+		
+		return "You havent even signed up for that raid.";
+		
 	}
 	
 	public String closeRaid(String msg) throws IOException{
@@ -166,6 +216,43 @@ public class RaidService {
 		return anouncement;
 	}
 	
+	public String notifyRaid(String msg) throws IOException{
+		String notify = "";
+		if(msg.contains("msg: ")) {
+			System.out.println("----------------------\n notify detected");
+			notify = msg.substring(msg.indexOf("msg:")+ 5);
+			System.out.println(notify);
+			msg = msg.substring(0, msg.indexOf("msg:"));
+			System.out.println(msg);
+			System.out.println("notify end\n------------------");
+		} else {
+			return "you didnt include your message Binch!";
+		}
+		String[] paramsCheck = msg.split(" ");
+		if(paramsCheck.length < 2) {
+			return "You forgot to specify the raid you want to notify Binch!";
+		}
+		String raidName = paramsCheck[1];
+		Raid raid = new Raid(raidName);
+		if(!raidRepository.raidCheck(raid)) {
+			return "Raid not found.";
+		}
+		raid = raidRepository.readRaid(raid);
+		String notification = "Tagging everyone who signed up for " + raid.getRaidName() + ".  " + notify + "\n";
+		for (Raider r: raid.getStarters()) {
+			notification +=r.toRollCall();
+		}
+		if(raid.getOverflow().size() > 0) {
+			notification+= "--------- \nOverflow: \n--------- \n";
+			for(Raider r: raid.getOverflow()) {
+				notification+=r.toRollCall();
+			}
+		}
+		return notification;
+		
+		
+	}
+	
 	public String rollCall(String msg, Guild guild) throws IOException{
 		String[] paramsCheck = msg.split(" ");
 		String ai = "blood";
@@ -206,7 +293,16 @@ public class RaidService {
 		boolean isOverflow = false;
 		boolean isRanged = false;
 		boolean meetsReq = false;
+		String info = "";
 		List<Role> roles = member.getRoles();
+		if(msg.contains("msg: ")) {
+			System.out.println("----------------------\n info detected");
+			info = msg.substring(msg.indexOf("msg:")+ 5);
+			System.out.println(info);
+			msg = msg.substring(0, msg.indexOf("msg:"));
+			System.out.println(msg);
+			System.out.println("info end\n------------------");
+		}
 		if(paramsCheck.length < 2) {
 			return "You forgot to specify the raid you want to sign up for.";
 		}
@@ -218,6 +314,9 @@ public class RaidService {
 		raid = raidRepository.readRaid(raid);
 	
 		Raider raider = new Raider(member.getUser().getId(),"");
+		if (!info.isEmpty()) {
+			raider.setInfo(info);
+		}
 		
 		if (paramsCheck.length < 3) {
 			if(getDefault(raider) != null) {
@@ -541,7 +640,7 @@ public class RaidService {
 		String roster = raid.getRaidMsg() + "\nRoster:\n";
 		if(raid.getRaiders().size() > 0) {
 			for(Raider r: raid.getStarters()) {
-				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + "\n";
+				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + (r.getPosition() == null ? "": "(taking melee position)" )+ ((r.getInfo()== null || r.getInfo().equals("null") )?  "" : ("info: " + r.getInfo())) +"\n";
 			}
 			if(raid.getOverflow().size() > 0) {
 				roster+= "--------- \nOverflow: \n--------- \n";

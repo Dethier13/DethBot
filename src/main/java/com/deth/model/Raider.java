@@ -6,6 +6,7 @@ import java.util.Date;
 public class Raider {
 	private String id;
 	private String role;
+	private String position;
 	private String info;
 	private LocalDate raidDate;
 	private int raids;
@@ -16,6 +17,7 @@ public class Raider {
 		super();
 		this.id = id;
 		this.role = role;
+		this.position = null;
 	}
 
 	public Raider(String id, String role, String info) {
@@ -23,6 +25,7 @@ public class Raider {
 		this.id = id;
 		this.role = role;
 		this.info = info;
+		this.position = null;
 	}
 	
 	public Raider(String id, LocalDate raidDate, int raids) {
@@ -30,6 +33,7 @@ public class Raider {
 		this.id = id;
 		this.raidDate = raidDate;
 		this.raids = raids;
+		this.position = null;
 	}
 
 	public String getId() {
@@ -48,6 +52,15 @@ public class Raider {
 		this.role = role;
 	}
 
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	
 	public String getInfo() {
 		return info;
 	}
@@ -119,7 +132,7 @@ public class Raider {
 	}
 	
 	public String toFile() {
-		return ""+this.id+" " + this.role + "\n";
+		return ""+this.id+" " + this.role + " " + this.info  + "\n";
 	}
 	
 	public String toAttendance() {
@@ -131,6 +144,6 @@ public class Raider {
 	}
 	
 	public String toRollCall() {
-		return "<@"+ this.id+"> " + this.role + "\n";
+		return "<@"+ this.id+"> " + this.role + ((this.info== null || this.info.equals("null") )?  "" : ("info: " + this.info)) + "\n";
 	}
 }

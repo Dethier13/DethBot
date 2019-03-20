@@ -78,12 +78,9 @@ public class RaidFileRepository {
 			String[] raidListParse;
 			while((readBuffer = bufferedReader.readLine())!= null) {
 				raidListParse = readBuffer.split(" ");
-
-				if(raidListParse.length == 2) {
-					tempRaider = new Raider(raidListParse[0], raidListParse[1]);
-				} else {
-					bufferedReader.close();
-					return null;
+				tempRaider = new Raider(raidListParse[0], raidListParse[1]);
+				if (raidListParse.length > 2) {
+					tempRaider.setInfo(readBuffer.substring(readBuffer.indexOf(raidListParse[1]) + raidListParse[1].length() + 1));
 				}
 				raidList.add(tempRaider);
 			}

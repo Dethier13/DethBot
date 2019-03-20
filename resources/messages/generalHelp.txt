@@ -1,9 +1,12 @@
 Available Commands are:
-->!su [Name of raid you want to join] [Role you want]
+->!su [Name of raid you want to join] [Role you want] (optional "msg: " for sets/raid specific role coordination)
 	-- Use this to sign up for a current open raid (you can check this via '!raidlist').
 	-- If you dont specify a role, you will be defaulted to Ranged dps.
 	--- Unless you have already set your default role.
 	-- If you've already signed up for a raid, you can use this to change your role as well.
+	-- !signup works as well
+->!update [raid] [msg: ]
+   -- used to coordinate roles/gear before raids, primarily for supports
 ->!default [role] 
 	-- Will save your default role to the bot, so you don't need to specify it every time.
 ->!withdraw [Name of raid to withdraw from]

@@ -26,6 +26,22 @@ public class RaidRosterController extends ControllerCommandsInfo{
 		}
 	}
 	
+	public void updateInfo(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		String message = "";
+		try {
+			message = raidService.updateInfo(member, guild, msg);
+			if (message == null) {
+				channel.sendMessage("Double check what you sent, somethings wrong with it.").queue();
+			}
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("info failed to update " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("info failed to update " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error updating raider info. " ).queue();
+		}
+		channel.sendMessage(message).queue();
+	}
+	
 	public void withdraw(MessageReceivedEvent event) {
 		getBasicInfo(event);
 		try {
