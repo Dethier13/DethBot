@@ -69,19 +69,18 @@ public class RaidFileRepository {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
 			String rosterInfo = bufferedReader.readLine();
 			String[] rosterInfoParse = rosterInfo.split(" ");
-			raid.setMaxTanks(Integer.parseInt(rosterInfoParse[0]));
-			raid.setMaxHeals(Integer.parseInt(rosterInfoParse[1]));
-			raid.setMaxMeleeDps(Integer.parseInt(rosterInfoParse[2]));
-			raid.setMaxDps(Integer.parseInt(rosterInfoParse[3]));
+			raid.setTier(Integer.parseInt(rosterInfoParse[0]));
+			raid.setMaxTanks(Integer.parseInt(rosterInfoParse[1]));
+			raid.setMaxHeals(Integer.parseInt(rosterInfoParse[2]));
+			raid.setMaxMeleeDps(Integer.parseInt(rosterInfoParse[3]));
+			raid.setMaxDps(Integer.parseInt(rosterInfoParse[4]));
 			raid.setRaidMsg(bufferedReader.readLine());
 			String[] raidListParse;
 			while((readBuffer = bufferedReader.readLine())!= null) {
 				raidListParse = readBuffer.split(" ");
-				//TODO: check logic info for sets. maybe check length/size of raidListParse?
+
 				if(raidListParse.length == 2) {
 					tempRaider = new Raider(raidListParse[0], raidListParse[1]);
-				} else if (raidListParse.length == 3){
-					tempRaider = new Raider(raidListParse[0], raidListParse[1], raidListParse[2]);
 				} else {
 					bufferedReader.close();
 					return null;

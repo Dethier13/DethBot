@@ -14,7 +14,7 @@ public class RaidRosterController extends ControllerCommandsInfo{
 	public void signup(MessageReceivedEvent event) {
 		getBasicInfo(event);
 		try {
-			String message = raidService.signup(member, msg);
+			String message = raidService.signup(member, guild, msg);
 			if(message == null) {
 				channel.sendMessage("Something went wrong. Try again later please.").queue();
 			}
@@ -38,6 +38,21 @@ public class RaidRosterController extends ControllerCommandsInfo{
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("withdraw failed " + ioe).queue();
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("withdraw failed " + ioe.getStackTrace()).queue();
 			guild.getTextChannelById(SIGNUP_CHAN_ID).sendMessage("Error occurred. Please try again later." ).queue();
+		}
+	}
+	
+	public void remove(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		try {
+			String message = raidService.remove(guild, msg);
+			if(message == null) {
+				channel.sendMessage("Something went wrong. Try again later please.").queue();
+			}
+			channel.sendMessage(message).queue();
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("withdraw failed " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("withdraw failed " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error occurred. Please try again later." ).queue();
 		}
 	}
 	

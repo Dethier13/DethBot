@@ -22,7 +22,7 @@ public class RaidController extends ControllerCommandsInfo{
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to create " + ioe).queue();
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to create " + ioe.getStackTrace()).queue();
-			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error making raid. " ).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error making raid. " ).queue();
 		}
 	}
 	
@@ -37,7 +37,7 @@ public class RaidController extends ControllerCommandsInfo{
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to update " + ioe).queue();
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to update " + ioe.getStackTrace()).queue();
-			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error updating raid. " ).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error updating raid. " ).queue();
 		}
 		channel.sendMessage(message).queue();
 	}
@@ -53,9 +53,27 @@ public class RaidController extends ControllerCommandsInfo{
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to close " + ioe).queue();
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to close " + ioe.getStackTrace()).queue();
-			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error closing raid. " ).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error closing raid. " ).queue();
 		}
 		channel.sendMessage(message).queue();
+	}
+	
+	public void cancelRaid(MessageReceivedEvent event) {
+		getBasicInfo(event);
+		try {
+			String message = raidService.cancelRaid(msg);
+			if (message == null) {
+				channel.sendMessage("Double check that command dumbass, somethings wrong with it.").queue();
+			} else if (message.contains("no anouncement")) {
+				guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("closed raid.").queue();
+			}
+			guild.getTextChannelById(SIGNUP_CHAN_ID).sendMessage(message).queue();
+			channel.sendMessage("The raid has been cancelled.").queue();;
+		} catch (IOException ioe) {
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to create " + ioe).queue();
+			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("file failed to create " + ioe.getStackTrace()).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error making raid. " ).queue();
+		}	
 	}
 	
 	public void rollcall(MessageReceivedEvent event) {
@@ -69,7 +87,7 @@ public class RaidController extends ControllerCommandsInfo{
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("rollcall failed " + ioe).queue();
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("rollcall failed " + ioe.getStackTrace()).queue();
-			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error occurred. " ).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error occurred. " ).queue();
 		}
 	}
 	
@@ -83,7 +101,7 @@ public class RaidController extends ControllerCommandsInfo{
 		} catch (IOException ioe) {
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("rollcall failed " + ioe).queue();
 			guild.getTextChannelById(BOT_CHAN_ID).sendMessage("rollcall failed " + ioe.getStackTrace()).queue();
-			guild.getTextChannelById(O_CHAN_ID).sendMessage("Error occurred. " ).queue();
+			guild.getTextChannelById(LEAD_CHAN_ID).sendMessage("Error occurred. " ).queue();
 		}
 	}
 }

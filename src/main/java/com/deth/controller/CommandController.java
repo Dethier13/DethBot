@@ -29,39 +29,49 @@ public class CommandController extends ListenerAdapter{
 		User user = event.getAuthor();
 		Message message = event.getMessage();
 		MessageChannel channel = event.getChannel();
-		String msg = message.getContentDisplay();
+		String msg = message.getContentDisplay().toLowerCase();
 		
 		try {
 			if (msg.startsWith("!open")) {
-				if(channel.getId().equals(O_CHAN_ID)) {
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
 					raidController.openRaid(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			} else if (msg.startsWith("!update")) {
-				if(channel.getId().equals(O_CHAN_ID)) {
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
 					raidController.updateRaid(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			} else if (msg.startsWith("!close")) {
-				if(channel.getId().equals(O_CHAN_ID)) {
-					raidController.closeRaid(event);
-					attendanceController.commitAttendance(event);
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
+						raidController.closeRaid(event);
+						attendanceController.commitAttendance(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+			} else if (msg.startsWith("!cancel")) {
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
+						raidController.cancelRaid(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			} else if (msg.startsWith("!su")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
-					//channel.sendMessage("Processing...").queue(); 
 					rosterController.signup(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
 			} else if (msg.startsWith("!withdraw")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
-					//channel.sendMessage("Processing...").queue(); 
 					rosterController.withdraw(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+			} else if (msg.startsWith("!remove")) {
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
+					rosterController.remove(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
@@ -74,7 +84,7 @@ public class CommandController extends ListenerAdapter{
 				}
 			
 			} else if (msg.startsWith("!rc")) {
-				if(channel.getId().equals(O_CHAN_ID)) {
+				if(channel.getId().equals(LEAD_CHAN_ID)) {
 					raidController.rollcall(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
@@ -135,7 +145,30 @@ public class CommandController extends ListenerAdapter{
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
+			} else if (msg.startsWith("!raids")) {
+				if(channel.getId().equals(SIGNUP_CHAN_ID)|| channel.getId().equals(O_CHAN_ID)) {
+					
+					attendanceController.raidCount(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+			} else if (msg.startsWith("!raidboard")) {
+				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
+					
+					attendanceController.raidBoard(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
+			} else if (msg.startsWith("!schedule")) {
+				infoController.raidSchedule(event);
+			} else if (msg.startsWith("!exempt")) {
+				if(channel.getId().equals(BOT_CHAN_ID)) {
+					attendanceController.exemptList(event);
+				} else {
+					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
+				}
 			}
+			
 		} catch (Exception e) {
 			event.getGuild().getTextChannelById(BOT_CHAN_ID).sendMessage("exception occurred: " + e).queue();
 			e.printStackTrace();
@@ -147,7 +180,7 @@ public class CommandController extends ListenerAdapter{
 	
 	@Override
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
-		infoController.welcomeMsg(event); 
+		//infoController.welcomeMsg(event); 
 
 	}
 	

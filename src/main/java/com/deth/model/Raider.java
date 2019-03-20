@@ -8,6 +8,7 @@ public class Raider {
 	private String role;
 	private String info;
 	private LocalDate raidDate;
+	private int raids;
 	
 	public Raider() {}
 
@@ -24,10 +25,11 @@ public class Raider {
 		this.info = info;
 	}
 	
-	public Raider(String id, LocalDate raidDate) {
+	public Raider(String id, LocalDate raidDate, int raids) {
 		super();
 		this.id = id;
 		this.raidDate = raidDate;
+		this.raids = raids;
 	}
 
 	public String getId() {
@@ -60,6 +62,18 @@ public class Raider {
 	
 	public void setRaidDate(LocalDate raidDate) {
 		this.raidDate = raidDate;
+		this.raids++;
+		System.out.println("numRaids: " + this.raids);
+	}
+	
+	
+
+	public int getRaids() {
+		return raids;
+	}
+
+	public void setRaids(int raids) {
+		this.raids = raids;
 	}
 
 	@Override
@@ -109,7 +123,7 @@ public class Raider {
 	}
 	
 	public String toAttendance() {
-		return ""+this.id+" " + this.raidDate+"\n";
+		return ""+this.id+" " + this.raidDate+ " " + this.raids + "\n";
 	}
 	
 	public String toFileWithInfo() {

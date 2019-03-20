@@ -9,11 +9,13 @@ public class Attendance {
 	private List<Raider> raidRoster;
 	private List<Raider> fullAttendance;
 	private static Attendance instance = new Attendance();
+	private LocalDate raidDay;
 	
 
 	private Attendance() {
 		this.raidRoster= new ArrayList<>();
 		this.fullAttendance= new ArrayList<>();
+		this.raidDay = null;
 	}
 	public static Attendance getInstance() {
 		return instance;
@@ -53,6 +55,11 @@ public class Attendance {
 		return isRemoved;
 	}
 	
+	public boolean setRaidDay() {
+		this.raidDay = LocalDate.now();
+		return true;
+	}
+	
 	public boolean update() {
 		System.out.println("Attendance update().");
 		for(int i = 0; i < raidRoster.size(); i++) {
@@ -60,10 +67,15 @@ public class Attendance {
 			for (int j = 0; j < fullAttendance.size(); j++)	
 				if(raidRoster.get(i).getId().equals(fullAttendance.get(j).getId())){
 					System.out.println("raider found, updating.");
+					raidRoster.get(i).setRaids(fullAttendance.get(j).getRaids());
 					fullAttendance.remove(fullAttendance.get(j));
 					j--;
 					System.out.println("J decrament");
-					raidRoster.get(i).setRaidDate(LocalDate.now());
+					if(this.raidDay!= null) {
+						raidRoster.get(i).setRaidDate(this.raidDay);
+					} else {
+						raidRoster.get(i).setRaidDate(LocalDate.now());
+					}
 					fullAttendance.add(raidRoster.get(i));
 					raidRoster.remove(i);
 					i--;
@@ -80,6 +92,11 @@ public class Attendance {
 		}
 		System.out.println("second loop finished.");
 		raidRoster.removeAll(raidRoster);
+		
+		
+		Collections.sort(fullAttendance, (a,b) -> a.getRaids() < b.getRaids() ? 1 : a.getRaids() == b.getRaids() ? 0 : -1);
+		
+		
 		return true;
 	}
 	

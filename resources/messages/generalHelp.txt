@@ -9,6 +9,11 @@ Available Commands are:
 ->!withdraw [Name of raid to withdraw from]
 	-- Use this to withdraw from a raid you previously signed up for.
 	-- It is appreciated if you include a reason ;)
-->!status [Name of raid you want to check]\n-Lists the current roster for the specified raid.
+->!status [Name of raid you want to check]
+	-Lists the current roster for the specified raid.
 ->!raidlist
 	-- Lists any available raids.
+->!raids
+	-- Tells you how many raids you have recorded with the bot, and the day of the last recorded raid
+->!raidboard
+	-- Shows the top 10 people with the highest recorded raids and tells you you're ranking.
