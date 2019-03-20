@@ -16,6 +16,8 @@ public final class FinalUtilProperties {
 	 * Determines which commands can be used in which channel
 	 */
 	public static final String SIGNUP_CHAN_ID;
+	public static final String STREAM_CHAN_ID;
+	public static final String LEAD_CHAN_ID;
 	public static final String O_CHAN_ID;
 	public static final String BOT_CHAN_ID;
 	
@@ -24,7 +26,9 @@ public final class FinalUtilProperties {
 	 * used for promoting from raids and exempting from attendance.
 	 */
 	public static final String SKEEVER;
+	//public static final 
 	public static final String ZOMBIE;
+	public static final String LOYALTY;
 	public static final String CORE;
 	public static final String OFFICER;
 	public static final String GM;
@@ -43,6 +47,16 @@ public final class FinalUtilProperties {
 	public static final String ROLE_MELEE;
 	public static final String ROLE_DPS;
 	public static final String ROLE_HEALS;
+	
+	/**
+	 * raider tier reqs
+	 */
+	public static final String DPS_1;
+	public static final String DPS_2;
+	public static final String TANK_1;
+	public static final String TANK_2;
+	public static final String HEAL_1;
+	public static final String HEAL_2;
 	
 	/**
 	 * paths to local files.
@@ -75,10 +89,13 @@ public final class FinalUtilProperties {
 		}
 		TOKEN = prop.getProperty("TOKEN");
 		SIGNUP_CHAN_ID = prop.getProperty("SIGNUP_CHAN_ID");
+		LEAD_CHAN_ID = prop.getProperty("LEAD_CHAN_ID");
 		O_CHAN_ID = prop.getProperty("O_CHAN_ID");
 		BOT_CHAN_ID = prop.getProperty("BOT_CHAN_ID");
+		STREAM_CHAN_ID = prop.getProperty("STREAM_CHAN_ID");
 		SKEEVER = prop.getProperty("SKEEVER");
 		ZOMBIE = prop.getProperty("ZOMBIE");
+		LOYALTY = prop.getProperty("LOYALTY");
 		CORE = prop.getProperty("CORE");
 		OFFICER = prop.getProperty("OFFICER");
 		GM = prop.getProperty("GM");
@@ -89,6 +106,12 @@ public final class FinalUtilProperties {
 		ROLE_MELEE = prop.getProperty("ROLE_MELEE");
 		ROLE_DPS = prop.getProperty("ROLE_DPS");
 		ROLE_HEALS = prop.getProperty("ROLE_HEALS");
+		DPS_1 = prop.getProperty("ROLE_DPS1");
+		DPS_2 = prop.getProperty("ROLE_DPS2");
+		TANK_1 = prop.getProperty("ROLE_TANK1");
+		TANK_2 = prop.getProperty("ROLE_TANK2");
+		HEAL_1 = prop.getProperty("ROLE_HEAL1");
+		HEAL_2 = prop.getProperty("ROLE_HEAL2");
 	}
 }
 

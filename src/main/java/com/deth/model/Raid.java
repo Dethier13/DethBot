@@ -19,6 +19,7 @@ public class Raid {
 	private List<Raider> raiders;
 	private List<Raider> starters;
 	private List<Raider> overflow;
+	private int tier = 0;
 	
 	public Raid() {}
 	
@@ -52,6 +53,23 @@ public class Raid {
 		super();
 		this.raidName = raidName;
 		this.raidMsg="";
+		this.maxTanks = maxTanks;
+		this.maxHeals = maxHeals;
+		this.maxDps = maxDps;
+		this.maxMeleeDps=maxMeleeDps;
+		this.numTank = 0;
+		this.numHeal = 0;
+		this.numDps = 0;
+		this.numMeleeDps=0;
+		this.starters= new ArrayList<>();
+		this.overflow= new ArrayList<>();
+	}
+	
+	public Raid(String raidName, int tier, int maxTanks, int maxHeals, int maxMeleeDps, int maxDps) {
+		super();
+		this.raidName = raidName;
+		this.raidMsg="";
+		this.tier=tier;
 		this.maxTanks = maxTanks;
 		this.maxHeals = maxHeals;
 		this.maxDps = maxDps;
@@ -151,7 +169,14 @@ public class Raid {
 	public int getMaxTanks() {
 		return maxTanks;
 	}
+	
+	public int getTier() {
+		return tier;
+	}
 
+	public void setTier(int tier) {
+		this.tier = tier;
+	}
 	public void setMaxTanks(int maxTanks) {
 		this.maxTanks = maxTanks;
 	}
@@ -268,8 +293,9 @@ public class Raid {
 		numDps = 0;
 		for(int i = 0; i < raiders.size(); i++) {
 			if(raiders.get(i).getRole().equals(ROLE_TANK)) {
-				this.numTank++;
-				if(numTank <= maxTanks) {
+				
+				if(numTank < maxTanks) {
+					this.numTank++;
 					starters.add(raiders.get(i));
 				} else {
 					overflow.add(raiders.get(i));
@@ -278,8 +304,8 @@ public class Raid {
 		}
 		for(int i = 0; i < raiders.size(); i++) {
 			if(raiders.get(i).getRole().equals(ROLE_HEALS)) {
-				this.numHeal++;
-				if(numHeal <= maxHeals) {
+				if(numHeal < maxHeals) {
+					this.numHeal++;
 					starters.add(raiders.get(i));
 				} else {
 					overflow.add(raiders.get(i));
@@ -290,8 +316,9 @@ public class Raid {
 			if(raiders.get(i).getRole().equals(ROLE_MELEE) || raiders.get(i).getRole().equals(ROLE_DPS)) {
 				if(raiders.get(i).getRole().equals(ROLE_MELEE)) {
 					System.out.println("melee detected.");
-					this.numMeleeDps++;
-					if(numMeleeDps <= maxMeleeDps) {
+					
+					if(numMeleeDps < maxMeleeDps) {
+						this.numMeleeDps++;
 						System.out.println("melee added to starters.");
 						starters.add(raiders.get(i));
 					} else {
@@ -307,7 +334,7 @@ public class Raid {
 					} else if ( numMeleeDps < maxMeleeDps) {
 						this.numMeleeDps++;
 						System.out.println("ranged added to melee spot. num: "+ numMeleeDps + "/" + maxMeleeDps);
-						raiders.get(i).setRole(ROLE_MELEE);
+						//raiders.get(i).setRole(ROLE_MELEE);
 						starters.add(raiders.get(i));
 					} else {
 						overflow.add(raiders.get(i));
@@ -321,7 +348,7 @@ public class Raid {
 	
 	public String toFileInfo() {
 		System.out.println(""+raidMsg);
-		return ""+this.maxTanks + " " + this.maxHeals + " " + this.maxMeleeDps + " " + this.maxDps + " \n" + this.raidMsg;
+		return ""+ this.tier + " "+this.maxTanks + " " + this.maxHeals + " " + this.maxMeleeDps + " " + this.maxDps + " \n" + this.raidMsg;
 	}
 	
 	public String toFileRoster() {

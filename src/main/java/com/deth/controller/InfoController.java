@@ -18,7 +18,7 @@ public class InfoController extends ControllerCommandsInfo{
 	public void raidHelp(MessageReceivedEvent event) {
 		getBasicInfo(event);
 		try {
-			if(channel.getId().equals(O_CHAN_ID)) {
+			if(channel.getId().equals(LEAD_CHAN_ID)) {
 				officerHelp();
 			} else {
 				signupHelp();

@@ -34,8 +34,10 @@ public class AttendanceRepository {
 			String[] raidListParse;
 			while((readBuffer = bufferedReader.readLine())!= null) {
 				raidListParse = readBuffer.split(" ");
-				if(raidListParse.length == 2) {
-					tempRaider = new Raider(raidListParse[0], LocalDate.parse(raidListParse[1]));
+				if(raidListParse.length==2) {
+					tempRaider = new Raider(raidListParse[0], LocalDate.parse(raidListParse[1]),0);
+				} else if(raidListParse.length == 3) {
+					tempRaider = new Raider(raidListParse[0], LocalDate.parse(raidListParse[1]), Integer.parseInt(raidListParse[2]));
 				} else {
 					bufferedReader.close();
 					return false;

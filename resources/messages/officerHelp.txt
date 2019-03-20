@@ -1,13 +1,22 @@
 Available Officer commands are:
--> !open [name of raid] [#tanks] [#heals] [#melee dps] [#ranged dps] msg: [custom message to display].
+-> !open [name of raid] [tier restriction] [#tanks] [#heals] [#melee dps] [#ranged dps] msg: [custom message to display].
 	-Opens new raid and makes announcement  in signup channel.
 	-The #'s for each role are required, as they are used to determine overflow.
 	-The custom msg is detected by the 'msg: ' tag, if that isn't there there will be no custom message.
 -> !update [name of raid] [what to update]
-    - you are able to update "role"/"roles" or "msg"/"message"
+    - you are able to update "role"/"roles" or "msg:"/"message:" or "tier"
     - roles lets you update how many of each role in the current raid, same format as opening a raid, [tanks] [heals] [melee] [ranged]
     - msg allows you to change the msg displayed in the 'status' command
--> !close [name of raid]\n-used to close raid and delete file used.
+    - tier lets you lower the tier of the raid to let more people signup.
+-> !remove [name of raid] [name of raider]
+	- used for when someone doesnt show up to a raid, or excess overflow.
+	- always remove ppl that weren't in the raid BEFORE closing the raid.
+-> !close [name of raid] 
+	- used to close raid and delete file used.
+	- gives 'credit' to the people who aren't marked as overflow.
+-> !cancel [name of raid] [msg: output to signup channel]
+	-used to cancel raids.
+	-cancelled raids don't give credit to signups.
 -> !rc [name of raid] [custom Ai String]
 	-Calls all people that signed up for the raid.
 	-If you include a custom message, it'll display the custom AI in the string, if not it defaults to 'blood'.
