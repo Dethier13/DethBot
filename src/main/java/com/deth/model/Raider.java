@@ -144,6 +144,6 @@ public class Raider {
 	}
 	
 	public String toRollCall() {
-		return "<@"+ this.id+"> " + this.role + ((this.info== null || this.info.equals("null") )?  "" : ("info: " + this.info)) + "\n";
+		return "<@"+ this.id+"> " + this.role + ((this.info== null || this.info.equals("null") )?  "" : (" " + this.info)) + "\n";
 	}
 }

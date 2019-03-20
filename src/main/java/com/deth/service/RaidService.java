@@ -640,7 +640,7 @@ public class RaidService {
 		String roster = raid.getRaidMsg() + "\nRoster:\n";
 		if(raid.getRaiders().size() > 0) {
 			for(Raider r: raid.getStarters()) {
-				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + (r.getPosition() == null ? "": "(taking melee position)" )+ ((r.getInfo()== null || r.getInfo().equals("null") )?  "" : ("info: " + r.getInfo())) +"\n";
+				roster+=guild.getMemberById(r.getId()).getEffectiveName() + " " + r.getRole() + (r.getPosition() == null ? "": "(taking melee position)" )+ ((r.getInfo()== null || r.getInfo().equals("null") )?  "" : (" " + r.getInfo())) +"\n";
 			}
 			if(raid.getOverflow().size() > 0) {
 				roster+= "--------- \nOverflow: \n--------- \n";

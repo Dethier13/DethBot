@@ -113,6 +113,8 @@ public class CommandController extends ListenerAdapter{
 			} else if (msg.startsWith("!raidhelp")) {
 				if(channel.getId().equals(SIGNUP_CHAN_ID)) {
 					infoController.raidHelp(event);
+				} else if(channel.getId().equals(LEAD_CHAN_ID)) {
+					infoController.raidHelp(event);
 				} else {
 					channel.sendMessage("" + channel.getName() + " is not the right channel for this command.").queue();
 				}
